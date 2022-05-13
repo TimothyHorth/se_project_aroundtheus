@@ -83,6 +83,10 @@ p {
   width: 24px;
 }
 
+.profile__info_name_edit_button:hover {
+  opacity: 0.6;
+}
+
 .profile__info_bio {
   height: 22px;
   width: 415px;
@@ -97,6 +101,10 @@ p {
 
 .profile__add_button {
   padding-left: 165px;
+}
+
+.profile__add_button:hover {
+  opacity: 0.6;
 }
 
 .elements {
@@ -146,6 +154,10 @@ p {
   height: 18.13px;
   width: 20.76px;
   padding-right: 18px;
+}
+
+.element__favorite_button:hover {
+  opacity: 0.5;
 }
 
 .footer {
