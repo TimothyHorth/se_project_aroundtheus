@@ -1,0 +1,130 @@
+h1,
+h2,
+h3,
+div,
+img,
+section,
+p {
+  margin: 0;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  max-width: 1280px;
+  background-color: black;
+  margin: 0px auto 0px;
+}
+
+.header {
+  height: 74px;
+  width: 880px;
+  padding: 45px 200px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header__image {
+  height: 33px;
+  width: 173px;
+}
+
+.header__line {
+  width: 880px;
+  padding-top: 41px;
+}
+
+.profile {
+  height: 120px;
+  width: 880px;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-left: 200px;
+  padding-bottom: 51px;
+}
+
+.profile__avatar {
+  height: 120px;
+  width: 120px;
+  padding-right: 30px;
+}
+
+.profile__info {
+  height: 77px;
+  width: 415px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.profile__info_name {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 16px;
+  align-items: baseline;
+}
+
+.profile__info_name_text {
+  height: 39px;
+  font-family: "Inter";
+  font-style: normal;
+  font-size: 42px;
+  color: white;
+  padding-right: 18px;
+}
+
+.profile__info_name_edit_button {
+  height: 24px;
+  width: 24px;
+}
+
+.profile__info_bio {
+  height: 22px;
+  width: 415px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: white;
+}
+
+.profile__add_button {
+  padding-left: 165px;
+}
+
+.elements {
+  height: 744px;
+  width: 880px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 200px;
+  column-gap: 17px;
+  row-gap: 20px;
+}
+
+.element {
+  height: 361px;
+  width: 282px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.element__image {
+  height: 282px;
+  width: 282px;
+}
+
+.footer {
+  padding-top: 67px;
+  padding-left: 200px;
+  padding-bottom: 60px;
+}
+
+.footer__text {
+  color: #545454;
+  font-family: "Inter";
+  font-size: 18px;
+}
