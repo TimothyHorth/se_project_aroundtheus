@@ -52,14 +52,14 @@
   text-align: left;
 }
 
-.element__favorite_button {
+.element__favorite-button {
   height: 18.13px;
   max-width: 20.76px;
   padding-right: 6.38%;
   transition: opacity 0.15s linear;
 }
 
-.element__favorite_button:hover {
+.element__favorite-button:hover {
   opacity: 0.5;
 }
 

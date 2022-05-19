@@ -1,11 +1,11 @@
 @media screen and (max-width: 930px) {
-  .add_button__responsive_rectangle {
+  .add-button__responsive-rectangle {
     width: 100%;
     max-height: 50px;
     z-index: 0;
   }
 
-  .add_button__plus_sign {
+  .add-button__plus-sign {
     position: absolute;
     top: calc(50% - 8px);
     left: calc(50% - 8px);
