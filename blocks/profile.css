@@ -24,7 +24,7 @@
 }
 
 .profile__info-name-text {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 42px;
   font-weight: 500;
   line-height: 1.14;
@@ -44,7 +44,7 @@
 }
 
 .profile__info-bio {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.22;
@@ -55,6 +55,8 @@
 .profile__add-button {
   padding: 0;
   margin-left: auto;
+  display: grid;
+  grid-template-columns: 1fr;
   background-color: transparent;
   border: 0;
   cursor: pointer;
@@ -62,7 +64,7 @@
 }
 
 .profile__add-button_type_desktop {
-  display: block;
+  display: grid;
 }
 
 .profile__add-button_type_mobile {
@@ -76,13 +78,16 @@
 .profile__add-button-responsive-rectangle {
   width: 100%;
   max-height: 50px;
+  grid-row-start: 1;
+  grid-column-start: 1;
   z-index: 0;
 }
 
 .profile__add-button-plus-sign {
-  position: absolute;
-  top: calc(50% - 8px);
-  left: calc(50% - 8px);
+  grid-row-start: 1;
+  grid-column-start: 1;
+  padding-left: calc(50% - 8px);
+  padding-top: calc(25px - 8px);
   z-index: 1;
 }
 
@@ -125,7 +130,6 @@
     margin: 0 0 0 0;
     width: 100%;
     max-height: 50px;
-    position: relative;
   }
 
   .profile__add-button_type_desktop {
@@ -133,7 +137,7 @@
   }
 
   .profile__add-button_type_mobile {
-    display: block;
+    display: grid;
   }
 }
 
