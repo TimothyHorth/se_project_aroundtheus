@@ -1,0 +1,80 @@
+.element {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.element_type_yosemite {
+  grid-area: yosemite;
+}
+
+.element_type_louise {
+  grid-area: louise;
+}
+
+.element_type_bald {
+  grid-area: bald;
+}
+
+.element_type_latemar {
+  grid-area: latemar;
+}
+
+.element_type_vanoise {
+  grid-area: vanoise;
+}
+
+.element_type_braies {
+  grid-area: braies;
+}
+
+.element__image {
+  width: 100%;
+}
+
+.element__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 31px;
+}
+
+.element__title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 5px 0 21px;
+  margin-right: auto;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.element__favorite_button {
+  height: 18.13px;
+  width: 20.76px;
+  padding-right: 6.38%;
+  transition: opacity 0.15s linear;
+}
+
+.element__favorite_button:hover {
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 930px) {
+  .element {
+    border-radius: 3.5%;
+  }
+
+  .element__title {
+    padding-left: 21px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .element {
+    width: 100%;
+  }
+}

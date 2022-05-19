@@ -1,0 +1,35 @@
+.footer {
+  max-width: 880px;
+  padding: 67px calc((100% - 880px) / 2) 60px;
+}
+
+.footer__text {
+  color: #545454;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.22;
+  text-align: left;
+}
+
+@media screen and (max-width: 992px) {
+  .footer {
+    padding: 48px 6% 60px;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .footer {
+    width: 88%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer {
+    padding: 48px 0 36px;
+  }
+
+  .footer__text {
+    font-size: min(4.5vw, 18px);
+  }
+}
