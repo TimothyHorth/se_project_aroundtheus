@@ -54,7 +54,7 @@
 
 .element__favorite_button {
   height: 18.13px;
-  width: 20.76px;
+  max-width: 20.76px;
   padding-right: 6.38%;
   transition: opacity 0.15s linear;
 }

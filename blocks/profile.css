@@ -6,7 +6,7 @@
 }
 
 .profile__avatar {
-  width: 120px;
+  max-width: 120px;
   border-radius: 60px;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .profile__info_name_edit_button {
-  width: 24px;
+  max-width: 24px;
   cursor: pointer;
   transition: opacity 0.15s linear;
 }
@@ -144,7 +144,7 @@
   }
 
   .profile__info_name_edit_button {
-    width: 18px;
+    max-width: 18px;
   }
 
   .profile__info_bio {
@@ -191,9 +191,5 @@
 
   .profile__info_name_edit_button {
     padding-left: 0;
-  }
-
-  .profile__add_button {
-    height: 50px;
   }
 }
