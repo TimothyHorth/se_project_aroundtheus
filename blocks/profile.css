@@ -72,6 +72,20 @@
 .profile__add-button:hover {
   opacity: 0.6;
 }
+
+.profile__add-button-responsive-rectangle {
+  width: 100%;
+  max-height: 50px;
+  z-index: 0;
+}
+
+.profile__add-button-plus-sign {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 8px);
+  z-index: 1;
+}
+
 @media screen and (max-width: 992px) {
   .profile {
     padding: 40px 6% 51px;
