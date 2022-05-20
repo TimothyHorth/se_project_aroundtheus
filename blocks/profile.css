@@ -34,9 +34,15 @@
 }
 
 .profile__info-name-edit-button {
-  max-width: 24px;
+  background-image: url("../images/profile_edit_button.png");
+  background-size: cover;
+  background-color: transparent;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  border: 0;
   cursor: pointer;
-  transition: opacity 0.15s linear;
 }
 
 .profile__info-name-edit-button:hover {
@@ -54,17 +60,18 @@
 
 .profile__add-button {
   padding: 0;
-  margin-left: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  background-color: transparent;
+  margin: 0;
   border: 0;
+  background-color: transparent;
   cursor: pointer;
-  transition: opacity 0.15s linear;
 }
 
 .profile__add-button_type_desktop {
-  display: grid;
+  margin-left: auto;
+  background-image: url(../images/profile_add_button.png);
+  background-size: cover;
+  width: 150px;
+  height: 50px;
 }
 
 .profile__add-button_type_mobile {
@@ -77,7 +84,7 @@
 
 .profile__add-button-responsive-rectangle {
   width: 100%;
-  max-height: 50px;
+  height: 50px;
   grid-row-start: 1;
   grid-column-start: 1;
   z-index: 0;
@@ -125,19 +132,14 @@
     padding-bottom: 36px;
   }
 
-  .profile__add-button {
-    padding: 0;
-    margin: 0 0 0 0;
-    width: 100%;
-    max-height: 50px;
-  }
-
   .profile__add-button_type_desktop {
     display: none;
   }
 
   .profile__add-button_type_mobile {
     display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
   }
 }
 
@@ -162,17 +164,12 @@
   }
 
   .profile__info-name-edit-button {
-    max-width: 18px;
+    width: 18px;
+    height: 18px;
   }
 
   .profile__info-bio {
     font-size: 16px;
-  }
-
-  .profile__add-button {
-    width: 100%;
-    padding: 0;
-    margin: 0;
   }
 }
 
@@ -205,9 +202,5 @@
   .profile__info-name-text {
     font-size: 22px;
     padding: 0 10px 0 43px;
-  }
-
-  .profile__info-name-edit-button {
-    padding-left: 0;
   }
 }

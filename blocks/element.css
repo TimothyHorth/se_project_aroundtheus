@@ -53,9 +53,14 @@
 }
 
 .element__favorite-button {
-  height: 18.13px;
-  max-width: 20.76px;
-  padding-right: 6.38%;
+  width: 21px;
+  height: 19px;
+  margin: 0 6.38% 0 0;
+  padding: 0;
+  background-image: url("../images/favorite_button.svg");
+  background-size: cover;
+  background-color: transparent;
+  border: 0;
   transition: opacity 0.15s linear;
 }
 
@@ -66,10 +71,6 @@
 @media screen and (max-width: 930px) {
   .element {
     border-radius: 3.5%;
-  }
-
-  .element__title {
-    padding-left: 21px;
   }
 }
 
