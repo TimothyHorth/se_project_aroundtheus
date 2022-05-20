@@ -53,9 +53,16 @@
 }
 
 .element__favorite-button {
-  height: 18.13px;
-  max-width: 20.76px;
-  padding-right: 6.38%;
+  max-height: 21px;
+  max-width: 21px;
+  width: 21px;
+  height: 19px;
+  margin: 0 6.38% 0 0;
+  padding: 0;
+  background-image: url("../images/favorite_button.svg");
+  background-size: cover;
+  background-color: transparent;
+  border: 0;
   transition: opacity 0.15s linear;
 }
 

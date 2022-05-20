@@ -34,8 +34,19 @@
 }
 
 .profile__info-name-edit-button {
-  max-width: 24px;
+  background-image: url("../images/profile_edit_button.png");
+  background-size: cover;
+  background-color: transparent;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  border: 0;
   cursor: pointer;
+}
+
+.profile__info-name-edit-button-pic {
+  max-width: 24px;
   transition: opacity 0.15s linear;
 }
 
@@ -54,17 +65,18 @@
 
 .profile__add-button {
   padding: 0;
-  margin-left: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  background-color: transparent;
+  margin: 0;
   border: 0;
+  background-color: transparent;
   cursor: pointer;
-  transition: opacity 0.15s linear;
 }
 
 .profile__add-button_type_desktop {
-  display: grid;
+  margin-left: auto;
+  background-image: url(../images/profile_add_button.png);
+  background-size: cover;
+  width: 150px;
+  height: 50px;
 }
 
 .profile__add-button_type_mobile {
@@ -125,19 +137,14 @@
     padding-bottom: 36px;
   }
 
-  .profile__add-button {
-    padding: 0;
-    margin: 0 0 0 0;
-    width: 100%;
-    max-height: 50px;
-  }
-
   .profile__add-button_type_desktop {
     display: none;
   }
 
   .profile__add-button_type_mobile {
     display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
   }
 }
 
@@ -162,6 +169,11 @@
   }
 
   .profile__info-name-edit-button {
+    max-width: 18px;
+    max-height: 18px;
+  }
+
+  .profile__info-name-edit-button-pic {
     max-width: 18px;
   }
 
