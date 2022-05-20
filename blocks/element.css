@@ -54,12 +54,12 @@
   width: 21px;
   min-width: 21px;
   height: 19px;
-  /*margin: 0 6.38% 0 0;*/
   padding: 0;
   background-image: url("../images/favorite_button.svg");
   background-size: cover;
   background-color: transparent;
   border: 0;
+  cursor: pointer;
   transition: opacity 0.15s linear;
 }
 
