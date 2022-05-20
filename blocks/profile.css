@@ -45,11 +45,6 @@
   cursor: pointer;
 }
 
-.profile__info-name-edit-button-pic {
-  max-width: 24px;
-  transition: opacity 0.15s linear;
-}
-
 .profile__info-name-edit-button:hover {
   opacity: 0.6;
 }
@@ -89,7 +84,7 @@
 
 .profile__add-button-responsive-rectangle {
   width: 100%;
-  max-height: 50px;
+  height: 50px;
   grid-row-start: 1;
   grid-column-start: 1;
   z-index: 0;
@@ -169,22 +164,12 @@
   }
 
   .profile__info-name-edit-button {
-    max-width: 18px;
-    max-height: 18px;
-  }
-
-  .profile__info-name-edit-button-pic {
-    max-width: 18px;
+    width: 18px;
+    height: 18px;
   }
 
   .profile__info-bio {
     font-size: 16px;
-  }
-
-  .profile__add-button {
-    width: 100%;
-    padding: 0;
-    margin: 0;
   }
 }
 
@@ -217,9 +202,5 @@
   .profile__info-name-text {
     font-size: 22px;
     padding: 0 10px 0 43px;
-  }
-
-  .profile__info-name-edit-button {
-    padding-left: 0;
   }
 }

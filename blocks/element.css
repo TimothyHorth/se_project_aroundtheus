@@ -53,8 +53,6 @@
 }
 
 .element__favorite-button {
-  max-height: 21px;
-  max-width: 21px;
   width: 21px;
   height: 19px;
   margin: 0 6.38% 0 0;
@@ -73,10 +71,6 @@
 @media screen and (max-width: 930px) {
   .element {
     border-radius: 3.5%;
-  }
-
-  .element__title {
-    padding-left: 21px;
   }
 }
 
