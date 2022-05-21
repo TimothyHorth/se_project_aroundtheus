@@ -21,121 +21,131 @@
         />
         <div class="header__line"></div>
       </header>
-      <section class="profile">
-        <img
-          class="profile__avatar"
-          src="./images/jacques-cousteau.jpg"
-          alt="profile avatar"
-        />
-        <div class="profile__info">
-          <div class="profile__info-name">
-            <h1 class="profile__info-name-text">Jacques Cousteau</h1>
-            <button
-              class="profile__info-name-edit-button"
-              type="button"
-              id="edit-button"
-            ></button>
-          </div>
-          <p class="profile__info-bio">Explorer</p>
-        </div>
-        <button
-          class="profile__add-button"
-          type="button"
-          id="add-button"
-        ></button>
-      </section>
-      <div class="elements">
-        <div class="element">
+      <main class="main">
+        <section class="profile">
           <img
-            class="element__image"
-            src="./images/yosemite-valley.png"
-            alt="yosemite valley"
+            class="profile__avatar"
+            src="./images/jacques-cousteau.jpg"
+            alt="profile avatar"
           />
-          <div class="element__info">
-            <h2 class="element__title">Yosemite Valley</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-yosemite"
-            ></button>
+          <div class="profile__info">
+            <div class="profile__info-name">
+              <h1 class="profile__info-name-text">Jacques Cousteau</h1>
+              <button
+                class="profile__info-name-edit-button"
+                type="button"
+                id="edit-button"
+                aria-label="edit"
+              ></button>
+            </div>
+            <p class="profile__info-bio">Explorer</p>
+          </div>
+          <button
+            class="profile__add-button"
+            type="button"
+            id="add-button"
+            aria-label="add"
+          ></button>
+        </section>
+        <div class="elements">
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/yosemite-valley.png"
+              alt="yosemite valley"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Yosemite Valley</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-yosemite"
+                aria-label="favorite"
+              ></button>
+            </div>
+          </div>
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/lake-louise.png"
+              alt="lake louise"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Lake Louise</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-louise"
+                aria-label="favorite"
+              ></button>
+            </div>
+          </div>
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/bald-mountains.png"
+              alt="bald mountains"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Bald Mountains</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-bald"
+                aria-label="favorite"
+              ></button>
+            </div>
+          </div>
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/latemar.png"
+              alt="latemar"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Latemar</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-latemar"
+                aria-label="favorite"
+              ></button>
+            </div>
+          </div>
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/vanoise-national-park.png"
+              alt="vanoise national park"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Vanoise National Park</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-vanoise"
+                aria-label="favorite"
+              ></button>
+            </div>
+          </div>
+          <div class="element">
+            <img
+              class="element__image"
+              src="./images/lago-di-braies.png"
+              alt="lago di braies"
+            />
+            <div class="element__info">
+              <h2 class="element__title">Lago Di Braies</h2>
+              <button
+                class="element__favorite-button"
+                type="button"
+                id="favorite-button-lago-di-braies"
+                aria-label="favorite"
+              ></button>
+            </div>
           </div>
         </div>
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/lake-louise.png"
-            alt="lake louise"
-          />
-          <div class="element__info">
-            <h2 class="element__title">Lake Louise</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-louise"
-            ></button>
-          </div>
-        </div>
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/bald-mountains.png"
-            alt="bald mountains"
-          />
-          <div class="element__info">
-            <h2 class="element__title">Bald Mountains</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-bald"
-            ></button>
-          </div>
-        </div>
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/latemar.png"
-            alt="latemar"
-          />
-          <div class="element__info">
-            <h2 class="element__title">Latemar</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-latemar"
-            ></button>
-          </div>
-        </div>
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/vanoise-national-park.png"
-            alt="vanoise national park"
-          />
-          <div class="element__info">
-            <h2 class="element__title">Vanoise National Park</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-vanoise"
-            ></button>
-          </div>
-        </div>
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/lago-di-braies.png"
-            alt="lago di braies"
-          />
-          <div class="element__info">
-            <h2 class="element__title">Lago Di Braies</h2>
-            <button
-              class="element__favorite-button"
-              type="button"
-              id="favorite-button-lago-di-braies"
-            ></button>
-          </div>
-        </div>
-      </div>
+      </main>
       <footer class="footer">
         <p class="footer__text">&copy; 2022 Around The U.S.</p>
       </footer>
