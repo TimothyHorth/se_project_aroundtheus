@@ -12,6 +12,7 @@
 }
 
 .header__line {
+  border-bottom: 1px solid #545454;
   width: 100%;
   padding-top: 41px;
 }
@@ -50,9 +51,5 @@
 
   .header__image {
     padding-left: 6%;
-  }
-
-  .header__line {
-    width: 100%;
   }
 }

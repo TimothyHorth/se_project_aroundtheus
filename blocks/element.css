@@ -3,30 +3,6 @@
   border-radius: 10px;
 }
 
-.element_type_yosemite {
-  grid-area: yosemite;
-}
-
-.element_type_louise {
-  grid-area: louise;
-}
-
-.element_type_bald {
-  grid-area: bald;
-}
-
-.element_type_latemar {
-  grid-area: latemar;
-}
-
-.element_type_vanoise {
-  grid-area: vanoise;
-}
-
-.element_type_braies {
-  grid-area: braies;
-}
-
 .element__image {
   width: 100%;
 }
@@ -48,6 +24,7 @@
   font-weight: 900;
   line-height: 1.2;
   text-align: left;
+  margin: 0;
 }
 
 .element__favorite-button {

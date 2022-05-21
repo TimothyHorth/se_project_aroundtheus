@@ -7,12 +7,3 @@
 @import url("../blocks/elements.css");
 @import url("../blocks/element.css");
 @import url("../blocks/footer.css");
-
-/* Normalizing/resetting certain tag selectors */
-h1,
-div,
-img,
-section,
-p {
-  margin: 0;
-}
