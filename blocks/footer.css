@@ -1,6 +1,7 @@
 .footer {
   max-width: 880px;
   padding: 67px calc((100% - 880px) / 2) 60px;
+  width: 100%;
 }
 
 .footer__text {
@@ -20,9 +21,11 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 660px) {
   .footer {
-    padding: 48px 0 36px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 36px;
   }
 
   .footer__text {

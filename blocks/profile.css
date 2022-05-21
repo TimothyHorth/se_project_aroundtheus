@@ -124,7 +124,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 660px) {
   .profile {
     padding: 42px 6% 36px;
   }
@@ -170,20 +170,11 @@
 
 @media screen and (max-width: 320px) {
   .profile__info {
-    width: 100%;
-    padding: 26.25px 0 0;
+    padding-top: 26.25px;
   }
 
   .profile__info-name {
     padding-bottom: 14px;
     padding-left: 0;
-  }
-
-  .profile__info-name-text {
-    font-size: 22px;
-  }
-
-  .profile__info-bio {
-    max-width: 175px;
   }
 }
