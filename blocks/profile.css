@@ -116,15 +116,10 @@
 
 @media screen and (max-width: 992px) {
   .profile {
-    padding: 40px 6% 51px;
-  }
-}
-
-@media screen and (max-width: 930px) {
-  .profile {
     width: 88%;
     display: flex;
     flex-direction: column;
+    padding: 40px 6% 51px;
   }
 
   .profile__info {

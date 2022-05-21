@@ -12,13 +12,8 @@
 
 @media screen and (max-width: 992px) {
   .elements {
-    padding: 0 6% 0;
-  }
-}
-
-@media screen and (max-width: 930px) {
-  .elements {
     width: 88%;
+    padding: 0 6% 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(3, 1fr);
     grid-template-areas:
