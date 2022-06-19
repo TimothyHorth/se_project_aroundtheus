@@ -1,36 +1,19 @@
-let modal = document.querySelector(".modal__container");
+//Initialize variables for modal window
+let modal = document.querySelector(".edit-profile-modal-container");
 let page = document.querySelector(".page");
 let editButton = document.querySelector("#edit-button");
 let closeButton = document.querySelector(".close-button");
-let submitButton = document.querySelector(".modal__submit-button");
+let submitButton = document.querySelector("#save");
 let profileName = document.querySelector(".profile__info-name-text");
 let profileAbout = document.querySelector(".profile__info-bio");
-
 let formName = document.querySelector("#name");
-let formDescription = document.querySelector("#description");
+let formDescription = document.querySelector("#about-me");
+let form = document.querySelector(".form");
+// initialize and define variables for element template and elements div
+let elementTemplate = document.querySelector("#element-template").content;
+let elements = document.querySelector(".elements");
 
-function showEditProfile() {
-  formName.value = profileName.textContent;
-  formDescription.value = profileAbout.textContent;
-  modal.classList.remove("modal_hidden");
-  page.classList.add("page__overlay");
-}
-
-function closeEditProfile() {
-  modal.classList.add("modal_hidden");
-  page.classList.remove("page__overlay");
-}
-
-function submitProfile() {
-  profileName.textContent = formName.value;
-  profileAbout.textContent = formDescription.value;
-  closeEditProfile();
-}
-
-editButton.addEventListener("click", showEditProfile);
-closeButton.addEventListener("click", closeEditProfile);
-submitButton.addEventListener("click", submitProfile);
-
+// Using template to create cards
 // Initialize objects 1 - 6 for each of the six cards
 let object_1 = {
   name: "Yosemite Valley",
@@ -65,10 +48,6 @@ let object_6 = {
 // Create an array containing all six initialized objects
 initialCards = [object_1, object_2, object_3, object_4, object_5, object_6];
 
-// initialize and define variables for element template and elements div
-let elementTemplate = document.querySelector("#element-template").content;
-let elements = document.querySelector(".elements");
-
 // Create a function for editing the element template to return a unique element card
 function getCardElement(data) {
   let cardElement = elementTemplate.querySelector(".element").cloneNode(true);
@@ -85,3 +64,29 @@ function getCardElement(data) {
 for (let i = 0; i < initialCards.length; i++) {
   elements.append(getCardElement(initialCards[i]));
 }
+
+// **** MODAL WINDOW **** //
+// functions for opening and closing modal window
+function showEditProfile() {
+  formName.value = profileName.textContent;
+  formDescription.value = profileAbout.textContent;
+  modal.classList.add("edit-profile-modal-container_opened");
+  page.classList.add("page__overlay");
+}
+
+function closeEditProfile() {
+  modal.classList.remove("edit-profile-modal-container_opened");
+  page.classList.remove("page__overlay");
+}
+
+function submitProfile(evt) {
+  evt.preventDefault();
+  profileName.textContent = formName.value;
+  profileAbout.textContent = formDescription.value;
+  closeEditProfile();
+}
+
+// EventListeners for buttons
+editButton.addEventListener("click", showEditProfile);
+closeButton.addEventListener("click", closeEditProfile);
+form.addEventListener("submit", submitProfile);

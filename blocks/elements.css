@@ -1,11 +1,10 @@
 .elements {
   max-width: 880px;
   padding: 0 calc((100% - 880px) / 2) 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  grid-template-areas:
-    "yosemite louise bald"
-    "latemar vanoise braies";
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px 17px;
 }
 
@@ -13,21 +12,5 @@
   .elements {
     width: 88%;
     padding: 0 6% 0;
-    grid-template-areas:
-      "yosemite louise"
-      "bald latemar"
-      "vanoise braies";
-  }
-}
-
-@media screen and (max-width: 660px) {
-  .elements {
-    grid-template-areas:
-      "yosemite"
-      "louise"
-      "bald"
-      "latemar"
-      "vanoise"
-      "braies";
   }
 }
