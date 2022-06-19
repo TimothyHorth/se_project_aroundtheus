@@ -1,4 +1,4 @@
-.edit-profile-modal-container {
+.modal__container {
   display: none;
   flex-direction: column;
   align-content: center;
@@ -12,7 +12,7 @@
   transform: translate(-50%, -50%);
 }
 
-.edit-profile-modal-container_opened {
+.modal__container_opened {
   display: flex;
 }
 
@@ -33,7 +33,7 @@
 }
 
 @media screen and (max-width: 660px) {
-  .edit-profile-modal-container {
+  .modal__container {
     max-width: 282px;
   }
 

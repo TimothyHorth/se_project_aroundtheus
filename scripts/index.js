@@ -1,5 +1,5 @@
 //Initialize variables for modal window
-let modal = document.querySelector(".edit-profile-modal-container");
+let modal = document.querySelector(".modal__container");
 let page = document.querySelector(".page");
 let editButton = document.querySelector("#edit-button");
 let closeButton = document.querySelector(".close-button");
@@ -70,12 +70,12 @@ for (let i = 0; i < initialCards.length; i++) {
 function showEditProfile() {
   formName.value = profileName.textContent;
   formDescription.value = profileAbout.textContent;
-  modal.classList.add("edit-profile-modal-container_opened");
+  modal.classList.add("modal__container_opened");
   page.classList.add("page__overlay");
 }
 
 function closeEditProfile() {
-  modal.classList.remove("edit-profile-modal-container_opened");
+  modal.classList.remove("modal__container_opened");
   page.classList.remove("page__overlay");
 }
 
