@@ -1,52 +1,45 @@
 //Initialize variables for modal window
-let modal = document.querySelector(".modal__container");
-let page = document.querySelector(".page");
-let editButton = document.querySelector("#edit-button");
-let closeButton = document.querySelector(".close-button");
-let submitButton = document.querySelector("#save");
+const modal = document.querySelector(".modal");
+const page = document.querySelector(".page");
+const editButton = document.querySelector("#edit-button");
+const closeButton = document.querySelector(".modal__close-button");
 let profileName = document.querySelector(".profile__info-name-text");
 let profileAbout = document.querySelector(".profile__info-bio");
 let formName = document.querySelector("#name");
 let formDescription = document.querySelector("#about-me");
-let form = document.querySelector(".form");
+const form = document.querySelector(".form");
 // initialize and define variables for element template and elements div
-let elementTemplate = document.querySelector("#element-template").content;
-let elements = document.querySelector(".elements");
+const elementTemplate = document.querySelector("#element-template").content;
+const elements = document.querySelector(".elements");
 
 // Using template to create cards
-// Initialize objects 1 - 6 for each of the six cards
-let object_1 = {
-  name: "Yosemite Valley",
-  link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-};
-
-let object_2 = {
-  name: "Lake Louise",
-  link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-};
-
-let object_3 = {
-  name: "Bald Mountains",
-  link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
-};
-
-let object_4 = {
-  name: "Latemar",
-  link: "https://code.s3.yandex.net/web-code/latemar.jpg",
-};
-
-let object_5 = {
-  name: "Vanoise National Park",
-  link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
-};
-
-let object_6 = {
-  name: "Lago di Braies",
-  link: "https://code.s3.yandex.net/web-code/lago.jpg",
-};
-
 // Create an array containing all six initialized objects
-initialCards = [object_1, object_2, object_3, object_4, object_5, object_6];
+const initialCards = [
+  {
+    name: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://code.s3.yandex.net/web-code/lago.jpg",
+  },
+];
 
 // Create a function for editing the element template to return a unique element card
 function getCardElement(data) {
@@ -70,13 +63,11 @@ for (let i = 0; i < initialCards.length; i++) {
 function showEditProfile() {
   formName.value = profileName.textContent;
   formDescription.value = profileAbout.textContent;
-  modal.classList.add("modal__container_opened");
-  page.classList.add("page__overlay");
+  modal.classList.add("modal_opened");
 }
 
 function closeEditProfile() {
-  modal.classList.remove("modal__container_opened");
-  page.classList.remove("page__overlay");
+  modal.classList.remove("modal_opened");
 }
 
 function submitProfile(evt) {

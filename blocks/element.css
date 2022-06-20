@@ -7,6 +7,7 @@
 }
 
 .element__image {
+  display: block;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   max-width: 282px;
@@ -20,7 +21,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 25px 22px 31px 21px;
+  padding: 25px 22px 25px 21px;
 }
 
 .element__title {
