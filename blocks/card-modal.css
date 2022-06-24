@@ -1,4 +1,4 @@
-.form-modal {
+.card-modal {
   margin: 0;
   position: fixed;
   display: none;
@@ -10,22 +10,22 @@
   z-index: 2;
 }
 
-.form-modal > .form-modal__container {
+.card-modal > .card-modal__container {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.25s linear;
 }
 
-.form-modal:hover > .form-modal__container {
+.card-modal:hover > .card-modal__container {
   visibility: visible;
   opacity: 1;
 }
 
-.form-modal_opened {
+.card-modal_opened {
   display: flex;
 }
 
-.form-modal__container {
+.card-modal__container {
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -38,7 +38,7 @@
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
-.form-modal__close-button {
+.card-modal__close-button {
   background-image: url("../images/close_icon.svg");
   background-color: transparent;
   background-size: contain;
@@ -47,17 +47,17 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  top: -48px;
-  right: -48px;
+  top: -42px;
+  right: -42px;
   transition: opacity 0.15s linear;
   cursor: pointer;
 }
 
-.form-modal__close-button:hover {
+.card-modal__close-button:hover {
   opacity: 0.6;
 }
 
-.form-modal__title {
+.card-modal__title {
   font-family: "Inter", sans-serif;
   font-size: 24px;
   font-weight: 900;
@@ -67,71 +67,30 @@
   padding: 34px 64px 0 36px;
 }
 
-.form-modal__form {
+.card-modal__form {
   padding: 36px;
   display: flex;
   flex-direction: column;
 }
 
-.form-modal__input {
-  margin: 0 0 48px 0;
-  border: none;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.2;
-  padding-bottom: 13px;
-  outline: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.form-modal__submit-button {
-  max-width: 430px;
-  width: 100%;
-  height: 50px;
-  color: white;
-  font-family: "Inter", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.2;
-  text-align: center;
-  background-color: black;
-  border: none;
-  border-radius: 3px;
-  transition: opacity 0.15s linear;
-  cursor: pointer;
-}
-
-.form-modal__submit-button:hover {
-  opacity: 0.8;
-}
-
 @media screen and (max-width: 660px) {
-  .form-modal__container {
+  .card-modal__container {
     max-width: 282px;
   }
 
-  .form-modal__close-button {
+  .card-modal__close-button {
     width: 26px;
     height: 26px;
     top: -40px;
     right: 0;
   }
 
-  .form-modal__title {
+  .card-modal__title {
     padding: 25px 22px 0;
     font-size: 18px;
   }
 
-  .form-modal__form {
+  .card-modal__form {
     padding: 75px 22px 25px;
-  }
-
-  .form-modal__input {
-    margin-bottom: 45px;
-  }
-
-  .form-modal__submit-button {
-    font-size: 14px;
   }
 }

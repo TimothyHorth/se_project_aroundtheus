@@ -47,8 +47,8 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  top: -48px;
-  right: -48px;
+  top: -42px;
+  right: -42px;
   transition: opacity 0.15s linear;
   cursor: pointer;
 }
