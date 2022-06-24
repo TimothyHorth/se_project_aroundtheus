@@ -46,7 +46,7 @@
             aria-label="add element"
           ></button>
         </section>
-        <section class="elements">
+        <div class="elements">
           <template id="element-template">
             <div class="element">
               <button
@@ -71,7 +71,7 @@
               </div>
             </div>
           </template>
-        </section>
+        </div>
       </main>
       <footer class="footer">
         <p class="footer__text">&copy; 2022 Around The U.S.</p>
@@ -148,8 +148,12 @@
           id="image-close"
           aria-label="image-close"
         ></button>
-        <img class="image-modal__image" src="" alt="image holder" />
-        <h2 class="image-modal__title"></h2>
+        <img
+          class="image-modal__image"
+          src="https://code.s3.yandex.net/web-code/yosemite.jpg"
+          alt="image holder"
+        />
+        <h2 class="image-modal__title">Image Title</h2>
       </div>
     </div>
     <script src="scripts/index.js"></script>
