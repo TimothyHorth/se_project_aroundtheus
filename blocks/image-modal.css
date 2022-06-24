@@ -1,4 +1,4 @@
-.modal {
+.image-modal {
   margin: 0;
   position: fixed;
   display: none;
@@ -10,35 +10,35 @@
   z-index: 2;
 }
 
-.modal > .modal__container {
+.image-modal > .image-modal__container {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.25s linear;
 }
 
-.modal:hover > .modal__container {
+.image-modal:hover > .image-modal__container {
   visibility: visible;
   opacity: 1;
 }
 
-.modal_opened {
+.image-modal_opened {
   display: flex;
 }
 
-.modal__container {
+.image-modal__container {
   display: flex;
   flex-direction: column;
   align-content: center;
-  max-width: 430px;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
+  max-width: 75vw;
+  max-height: 75vh;
+  background-color: transparent;
+  border-radius: 0px;
   position: relative;
   margin: auto;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
-.modal__close-button {
+.image-modal__close-button {
   background-image: url("../images/close_icon.svg");
   background-color: transparent;
   background-size: contain;
@@ -53,44 +53,32 @@
   cursor: pointer;
 }
 
-.modal__close-button:hover {
+.image-modal__close-button:hover {
   opacity: 0.6;
 }
 
-.modal__title {
-  font-family: "Inter", sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1.2;
-  color: black;
-  margin: 0;
-  padding: 34px 64px 0 36px;
+.image-modal__image {
+  display: block;
+  max-width: 75vw;
+  max-height: 75vh;
 }
 
-.modal__form {
-  padding: 36px;
-  display: flex;
-  flex-direction: column;
+.image-modal__title {
+  margin: 0;
+  background-color: transparent;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  padding-top: 10px;
 }
 
 @media screen and (max-width: 660px) {
-  .modal__container {
-    max-width: 282px;
-  }
-
-  .modal__close-button {
-    width: 26px;
-    height: 26px;
-    top: -40px;
-    right: 0;
-  }
-
-  .modal__title {
-    padding: 25px 22px 0;
-    font-size: 18px;
-  }
-
-  .modal__form {
-    padding: 75px 22px 25px;
+  .image-modal__close-button {
+    width: 21px;
+    height: 21px;
+    top: -26px;
+    right: -26px;
   }
 }

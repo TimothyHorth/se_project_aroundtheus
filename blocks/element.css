@@ -4,12 +4,32 @@
   max-width: 282px;
   height: 361px;
   width: 100%;
+  position: relative;
+}
+
+.element__trash-button {
+  margin: 0;
+  padding: 0;
+  background-image: url("../images/trash.svg");
+  background-color: transparent;
+  position: absolute;
+  width: 18px;
+  height: 19.3px;
+  top: 18px;
+  right: 15px;
+  border: none;
+  transition: opacity 0.15s linear;
+  cursor: pointer;
+}
+
+.element__trash-button:hover {
+  opacity: 0.6;
 }
 
 .element__image {
   display: block;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
   max-width: 282px;
   max-height: 282px;
   width: 100%;
@@ -51,6 +71,10 @@
 
 .element__favorite-button:hover {
   opacity: 0.5;
+}
+
+.element__favorite-button_active {
+  background-image: url("../images/favorite_button_active.svg");
 }
 
 @media screen and (max-width: 992px) {
