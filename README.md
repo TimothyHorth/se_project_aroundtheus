@@ -34,7 +34,7 @@ The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, 
 
 **Figma**
 
-- [Link to the project on Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4%3A-Around-The-U.S.-%2F-desktop-%2B-mobile?node-id=0%3A1)
+- [Link to the project on Figma](https://www.figma.com/file/m79HxYeZpOXRw0Tz2eZGOV/Sprint-5%3A-Around-The-U.S.-%7C-desktop-%2B-mobile?node-id=1%3A2)
 
 **Images**
 
