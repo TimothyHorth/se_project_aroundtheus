@@ -1,29 +1,31 @@
 //Initialize variables for modal window
 
 // Profile Modal window
-const profileModal = document.querySelector(".modal");
+const profileModal = document.querySelector(".modal_type_profile");
 const profileEditButton = document.querySelector("#edit-button");
-const profileModalCloseButton = document.querySelector(".modal__close-button");
+const profileModalCloseButton = document.querySelector(
+  ".modal__close-button_type_profile"
+);
 const profileName = document.querySelector(".profile__info-name-text");
 const profileAbout = document.querySelector(".profile__info-bio");
 const formName = document.querySelector("#name");
 const formDescription = document.querySelector("#about-me");
-const profileForm = document.querySelector(".modal__form");
+const profileForm = document.querySelector(".modal__form_type_profile");
 
 // Card Modal window
-const newCardModal = document.querySelector(".card-modal");
+const newCardModal = document.querySelector(".modal_type_card");
 const newCardModalCloseButton = document.querySelector(
-  ".card-modal__close-button"
+  ".modal__close-button_type_card"
 );
-const newCardModalForm = document.querySelector(".card-modal__form");
+const newCardModalForm = document.querySelector(".modal__form_type_card");
 const cardTitle = document.querySelector("#title");
 const cardImageLink = document.querySelector("#image-link");
 const addCardButton = document.querySelector(".profile__add-button");
 
 // Image Modal window
-const imageModal = document.querySelector(".image-modal");
-const imageModalImage = imageModal.querySelector(".image-modal__image");
-const imageModalTitle = imageModal.querySelector(".image-modal__title");
+const imageModal = document.querySelector(".modal_type_image");
+const imageModalImage = imageModal.querySelector(".modal__image");
+const imageModalTitle = imageModal.querySelector(".modal__title_type_image");
 const imageModalCloseButton = imageModal.querySelector("#image-close");
 
 // initialize and define variables for element template and elements div
@@ -110,11 +112,11 @@ initialCards.forEach(function (card) {
 //Universal functions for opening and closing modal windows
 
 function openPopup(popup) {
-  popup.classList.add("popup_opened");
+  popup.classList.add("modal_opened");
 }
 
 function closePopup(popup) {
-  popup.classList.remove("popup_opened");
+  popup.classList.remove("modal_opened");
 }
 
 // function for filling in the profile form with current values
