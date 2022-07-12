@@ -1,3 +1,6 @@
+// Import function
+// import { resetFormValidation } from "./validate";
+
 //Initialize variables for modal window
 
 // Profile Modal window
@@ -117,6 +120,7 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove("modal_opened");
+  // call function for reseting form
 }
 
 // function for filling in the profile form with current values
@@ -148,6 +152,24 @@ function submitNewCard(evt) {
 }
 
 // ****EVENTLISTENERS FOR BUTTONS****
+
+// Close modal window by clicking on overlay
+document.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("modal")) {
+    console.log("close");
+    closePopup(evt.target);
+  }
+});
+
+// Close modal window by pressing the "Escape" button
+document.addEventListener("keydown", function (evt) {
+  if (evt.key === "Escape") {
+    modalList = document.querySelectorAll(".modal");
+    modalList.forEach(function (modal) {
+      closePopup(modal);
+    });
+  }
+});
 
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
