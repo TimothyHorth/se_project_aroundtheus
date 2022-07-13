@@ -154,7 +154,8 @@ function submitNewCard(evt) {
 // ****EVENTLISTENERS FOR BUTTONS****
 
 // Close modal window by clicking on overlay
-document.addEventListener("click", function (evt) {
+// I chose to use "mousedown" since I was accidently closing the modal window when I was trying to highlight the text and would let up on the mouse button outside the modal window
+document.addEventListener("mousedown", function (evt) {
   if (evt.target.classList.contains("modal")) {
     console.log("close");
     closePopup(evt.target);
