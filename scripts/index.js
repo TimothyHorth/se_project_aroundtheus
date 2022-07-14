@@ -125,12 +125,6 @@ function closePopup(popup) {
   popup.classList.remove("modal_opened");
   popup.removeEventListener("mousedown", closePopupOnRemoteClick);
   document.removeEventListener("keydown", closePopupOnEsc);
-  if (popup == profileModal) {
-    const inputList = popup.querySelectorAll(".form__input");
-    inputList.forEach(function (inputElement) {
-      removeInputErrorClasses(popup, inputElement);
-    });
-  }
 }
 
 // function for filling in the profile form with current values
@@ -163,8 +157,10 @@ function submitNewCard(evt) {
     newCardModalForm.querySelectorAll(".form__input")
   );
   const buttonElement = newCardModalForm.querySelector(".form__submit-button");
-  toggleButtonState(inputList, buttonElement);
-  removeInputErrorClasses(newCardModalForm, inputElement);
+  toggleButtonState(inputList, buttonElement, validationConfig);
+  inputList.forEach(function (inputElement) {
+    removeInputErrorClasses(newCardModalForm, inputElement, validationConfig);
+  });
 }
 
 // ****EVENTLISTENERS FOR BUTTONS****
@@ -187,6 +183,7 @@ function closePopupOnEsc(evt) {
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
   fillProfileForm();
+  resetValidation(validationConfig);
   openPopup(profileModal);
 });
 profileModalCloseButton.addEventListener("click", function () {

@@ -1,105 +1,126 @@
-/* Hello Kseniya! Thank you for reviewing my project. I've tried my best to incorporate all your comments. 
-However, I am struggling with figuring out how to incorporate the enableValidation function and use it as a
-configuration object. */
+// Kseniya! Thank you so much for helpful tips and information! Everything makes a lot more sense now. Much appreciated! */
 
-const showInputError = (form, inputElement) => {
+// Function to show input error
+const showInputError = (form, inputElement, validationConfig) => {
   const formError = form.querySelector(`#${inputElement.id}-input-error`);
   formError.textContent = inputElement.validationMessage;
-  formError.classList.add("form__input-error_active");
+  formError.classList.add(validationConfig.activeInputErrorClass);
   if (
     !inputElement.validity.valid &&
     inputElement.value.length == 1 &&
     !inputElement.validity.typeMismatch
   ) {
-    formError.classList.add("form__input-error_type_double-line");
-    inputElement.classList.add("form__input_type_error");
+    formError.classList.add(validationConfig.errorClassDoubleLine);
+    inputElement.classList.add(validationConfig.inputErrorClass);
   } else if (!inputElement.validity.valid) {
-    formError.classList.add("form__input-error_type_single-line");
-    inputElement.classList.add("form__input_type_error");
+    formError.classList.add(validationConfig.errorClassSingleLine);
+    inputElement.classList.add(validationConfig.inputErrorClass);
   }
 };
 
-const hideInputError = (form, inputElement) => {
-  if (inputElement.classList.contains("form__input_type_error")) {
-    inputElement.classList.remove("form__input_type_error");
+// Function to hide input error
+const hideInputError = (form, inputElement, validationConfig) => {
+  if (inputElement.classList.contains(validationConfig.inputErrorClass)) {
+    inputElement.classList.remove(validationConfig.inputErrorClass);
   }
   const formError = form.querySelector(`#${inputElement.id}-input-error`);
-  formError.classList.remove("form__input-error_active");
+  formError.classList.remove(validationConfig.activeInputErrorClass);
 };
 
-function removeInputErrorClasses(form, inputElement) {
+// Function to remove error classes
+function removeInputErrorClasses(form, inputElement, validationConfig) {
   const formError = form.querySelector(`#${inputElement.id}-input-error`);
-  inputElement.classList.remove("form__input_type_error");
-  formError.classList.remove("form__input-error_active");
-  if (formError.classList.contains("form__input-error_type_single-line")) {
-    formError.classList.remove("form__input-error_type_single-line");
+  formError.classList.remove(validationConfig.activeInputErrorClass);
+  inputElement.classList.remove(validationConfig.inputErrorClass);
+  if (formError.classList.contains(validationConfig.errorClassSingleLine)) {
+    formError.classList.remove(validationConfig.errorClassSingleLine);
   }
-  if (formError.classList.contains("form__input-error_type_double-line")) {
-    formError.classList.remove("form__input-error_type_double-line");
+  if (formError.classList.contains(validationConfig.errorClassDoubleLine)) {
+    formError.classList.remove(validationConfig.errorClassDoubleLine);
   }
 }
 
+// Function to reset form validation
+function resetValidation(validationConfig) {
+  const inputList = profileModal.querySelectorAll(
+    validationConfig.inputSelector
+  );
+  inputList.forEach(function (inputElement) {
+    removeInputErrorClasses(profileModal, inputElement, validationConfig);
+  });
+}
+
+// Function to toggle the input errors based on validity
 const toggleInputError = (form, inputElement) => {
   if (hasInvalidInput) {
-    showInputError(form, inputElement);
+    showInputError(form, inputElement, validationConfig);
   } else {
-    hideInputError(form, inputElement);
+    hideInputError(form, inputElement, validationConfig);
   }
 };
 
+// Function to toggle Submit button state (disabled or not)
+const toggleButtonState = (inputList, buttonElement, validationConfig) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "true");
+  } else {
+    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+    buttonElement.removeAttribute("disabled", "true");
+  }
+};
+
+// Function to check if all input values are valid
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add("form__submit-button_inactive");
-    buttonElement.setAttribute("disabled", "true");
-  } else {
-    buttonElement.classList.remove("form__submit-button_inactive");
-    buttonElement.removeAttribute("disabled", "true");
-  }
-};
-
-const setEventListeners = (form) => {
-  const inputList = Array.from(form.querySelectorAll(".form__input"));
-  const buttonElement = form.querySelector(".form__submit-button");
-  toggleButtonState(inputList, buttonElement);
+// Function to initially set all form and element states to the correct display, as well as
+// set event listeners on each input to run validation upon new input
+const setEventListeners = (form, validationConfig) => {
+  const inputList = Array.from(
+    form.querySelectorAll(validationConfig.inputSelector)
+  );
+  const buttonElement = form.querySelector(
+    validationConfig.submitButtonSelector
+  );
+  toggleButtonState(inputList, buttonElement, validationConfig);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
-      removeInputErrorClasses(form, inputElement);
-      toggleInputError(form, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      removeInputErrorClasses(form, inputElement, validationConfig);
+      toggleInputError(form, inputElement, validationConfig);
+      toggleButtonState(inputList, buttonElement, validationConfig);
     });
   });
 };
 
-const enableValidation = () => {
-  fillProfileForm();
-  const formList = Array.from(document.querySelectorAll(".form"));
+// Function to begin the validation process
+async function enableValidation(validationConfig) {
+  await fillProfileForm();
+  const formList = Array.from(
+    document.querySelectorAll(validationConfig.formSelector)
+  );
   formList.forEach((form) => {
     form.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-    setEventListeners(form);
+    setEventListeners(form, validationConfig);
   });
-};
+}
 
-enableValidation();
-
-/* I do not know what to do with the enableValidation function in regards to the project prompt
-We were not taught what to do with that. I've looked into it and I'm not sure what is being asked exactly*/
-
-/*
-enableValidation({
+// Initializing the configuration object for validation
+const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
   submitButtonSelector: ".form__submit-button",
   inactiveButtonClass: "form__submit-button_inactive",
-  inputErrorClass: "form__input-error_active",
+  activeInputErrorClass: "form__input-error_active",
+  inputErrorClass: "form__input_type_error",
   errorClassSingleLine: "form__input-error_type_single-line",
   errorClassDoubleLine: "form__input-error_type_double-line",
-});
-*/
+};
+
+// Call the enableValidation function to initialize forms
+enableValidation(validationConfig);
