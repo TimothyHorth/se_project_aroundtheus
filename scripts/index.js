@@ -1,6 +1,3 @@
-// Import function
-// import { resetFormValidation } from "./validate";
-
 //Initialize variables for modal window
 
 // Profile Modal window
@@ -78,12 +75,16 @@ function getCardElement(data) {
   cardElementImage.src = data.link;
 
   // Image modal function - create function to open image in modal window
-  cardElementImage.addEventListener("click", function (evt) {
+  // Define function for creating a new card element
+  function openImageModal(evt) {
     imageModalImage.src = evt.target.src;
     imageModalImage.alt = evt.target.alt;
     imageModalTitle.textContent = cardElementTitle.textContent;
     openPopup(imageModal);
-  });
+  }
+
+  // Add event listener to image for opening ImageModal if clicked
+  cardElementImage.addEventListener("click", openImageModal);
 
   // Like Button - create function so that like button is filled in
   function favoriteButtonAction(evt) {
@@ -116,11 +117,20 @@ initialCards.forEach(function (card) {
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
+  popup.addEventListener("mousedown", closePopupOnRemoteClick);
+  document.addEventListener("keydown", closePopupOnEsc);
 }
 
 function closePopup(popup) {
   popup.classList.remove("modal_opened");
-  // call function for reseting form
+  popup.removeEventListener("mousedown", closePopupOnRemoteClick);
+  document.removeEventListener("keydown", closePopupOnEsc);
+  if (popup == profileModal) {
+    const inputList = popup.querySelectorAll(".form__input");
+    inputList.forEach(function (inputElement) {
+      removeInputErrorClasses(popup, inputElement);
+    });
+  }
 }
 
 // function for filling in the profile form with current values
@@ -149,28 +159,30 @@ function submitNewCard(evt) {
   elements.prepend(getCardElement(newCard));
   closePopup(newCardModal);
   newCardModalForm.reset();
+  const inputList = Array.from(
+    newCardModalForm.querySelectorAll(".form__input")
+  );
+  const buttonElement = newCardModalForm.querySelector(".form__submit-button");
+  toggleButtonState(inputList, buttonElement);
+  removeInputErrorClasses(newCardModalForm, inputElement);
 }
 
 // ****EVENTLISTENERS FOR BUTTONS****
 
 // Close modal window by clicking on overlay
-// I chose to use "mousedown" since I was accidently closing the modal window when I was trying to highlight the text and would let up on the mouse button outside the modal window
-document.addEventListener("mousedown", function (evt) {
-  if (evt.target.classList.contains("modal")) {
-    console.log("close");
+function closePopupOnRemoteClick(evt) {
+  if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
-});
+}
 
 // Close modal window by pressing the "Escape" button
-document.addEventListener("keydown", function (evt) {
+function closePopupOnEsc(evt) {
   if (evt.key === "Escape") {
-    modalList = document.querySelectorAll(".modal");
-    modalList.forEach(function (modal) {
-      closePopup(modal);
-    });
+    const openedModal = document.querySelector(".modal_opened");
+    closePopup(openedModal);
   }
-});
+}
 
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {

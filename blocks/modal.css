@@ -1,27 +1,27 @@
 .modal {
   position: fixed;
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  pointer-events: none;
+  transition: visibility 0s 0.25s, opacity 0.5s linear;
 }
 
-.modal > .modal__container {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.25s linear;
-}
-
-.modal:hover > .modal__container {
-  visibility: visible;
+.modal > .modal_opened {
   opacity: 1;
 }
 
 .modal_opened {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transition: visibility 0s, opacity 0s linear;
 }
 
 .modal_type_profile {

@@ -26,14 +26,15 @@
   font-size: 12px;
   line-height: 1.25;
   color: #ff0000;
+  margin-bottom: 0;
 }
 
-.form__input-error_type_required {
-  padding-bottom: 15px;
+.form__input-error_type_single-line {
+  margin-bottom: 15px;
 }
 
-.form__input-error_type_minlength {
-  padding-bottom: 0;
+.form__input-error_type_double-line {
+  margin-bottom: 0;
 }
 
 .form__input-error_active {
