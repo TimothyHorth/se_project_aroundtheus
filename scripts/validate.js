@@ -32,21 +32,15 @@ function removeInputErrorClasses(form, inputElement, validationConfig) {
   const formError = form.querySelector(`#${inputElement.id}-input-error`);
   formError.classList.remove(validationConfig.activeInputErrorClass);
   inputElement.classList.remove(validationConfig.inputErrorClass);
-  if (formError.classList.contains(validationConfig.errorClassSingleLine)) {
-    formError.classList.remove(validationConfig.errorClassSingleLine);
-  }
-  if (formError.classList.contains(validationConfig.errorClassDoubleLine)) {
-    formError.classList.remove(validationConfig.errorClassDoubleLine);
-  }
+  formError.classList.remove(validationConfig.errorClassSingleLine);
+  formError.classList.remove(validationConfig.errorClassDoubleLine);
 }
 
 // Function to reset form validation
-function resetValidation(validationConfig) {
-  const inputList = profileModal.querySelectorAll(
-    validationConfig.inputSelector
-  );
+function resetValidation(form, validationConfig) {
+  const inputList = form.querySelectorAll(validationConfig.inputSelector);
   inputList.forEach(function (inputElement) {
-    removeInputErrorClasses(profileModal, inputElement, validationConfig);
+    removeInputErrorClasses(form, inputElement, validationConfig);
   });
 }
 
@@ -66,7 +60,7 @@ const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     buttonElement.setAttribute("disabled", "true");
   } else {
     buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    buttonElement.removeAttribute("disabled", "true");
+    buttonElement.removeAttribute("disabled");
   }
 };
 
@@ -78,7 +72,7 @@ const hasInvalidInput = (inputList) => {
 };
 
 // Function to initially set all form and element states to the correct display, as well as
-// set event listeners on each input to run validation upon new input
+// set event listeners on each input to run validation upon new input.
 const setEventListeners = (form, validationConfig) => {
   const inputList = Array.from(
     form.querySelectorAll(validationConfig.inputSelector)
@@ -97,8 +91,11 @@ const setEventListeners = (form, validationConfig) => {
 };
 
 // Function to begin the validation process
-async function enableValidation(validationConfig) {
-  await fillProfileForm();
+// I was using async becuase I need fillProfileForm() to run before the initial toggleButtonState().
+// Without ensuring that fillProfileForm() executes first, the Submit button for the edit profile is disabled at first
+// since the form values are empty to begin with.
+// I remedied this by adding value properties to the two inputs in the profile modal.
+function enableValidation(validationConfig) {
   const formList = Array.from(
     document.querySelectorAll(validationConfig.formSelector)
   );

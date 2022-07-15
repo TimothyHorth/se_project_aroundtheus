@@ -98,7 +98,7 @@ function getCardElement(data) {
     ".element__trash-button"
   );
   cardElementTrashButton.addEventListener("click", function (evt) {
-    evt.target.parentElement.remove();
+    evt.target.closest(".element").remove();
   });
 
   // Return cardElement
@@ -158,9 +158,7 @@ function submitNewCard(evt) {
   );
   const buttonElement = newCardModalForm.querySelector(".form__submit-button");
   toggleButtonState(inputList, buttonElement, validationConfig);
-  inputList.forEach(function (inputElement) {
-    removeInputErrorClasses(newCardModalForm, inputElement, validationConfig);
-  });
+  resetValidation(newCardModalForm, validationConfig);
 }
 
 // ****EVENTLISTENERS FOR BUTTONS****
@@ -183,7 +181,7 @@ function closePopupOnEsc(evt) {
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
   fillProfileForm();
-  resetValidation(validationConfig);
+  resetValidation(profileModal, validationConfig);
   openPopup(profileModal);
 });
 profileModalCloseButton.addEventListener("click", function () {
