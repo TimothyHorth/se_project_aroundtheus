@@ -10,11 +10,11 @@
 
 **Intro**
 
-This webpage is the fourth project in the Software Engineer program at Practicum by Yandex. It was created using HTML, CSS, and JavaScript. The HTML and CSS portions were created based on a design spec provided using Figma. The main focus of this project was to build a responsive webpage that would seamlessly adjust its layout based on the screen size. The break points for this webpage were determined by the common screen sizes of popular electronic devices, as well as how webpage elements looked and interacted with eachother at different resolutions.
+This webpage is the fifth project in the Software Engineer program at Practicum by Yandex. It was created using HTML, CSS, and JavaScript. The HTML and CSS portions were created based on a design spec provided using Figma. The main focus of this project was to build a responsive webpage that would seamlessly adjust its layout based on the screen size. The break points for this webpage were determined by the common screen sizes of popular electronic devices, as well as how webpage elements looked and interacted with eachother at different resolutions.
 
-Additionally, this was my first project implementing JavaScript into a webpage. JavaScript was utilized to create a pop-up window that allows the user to edit their name and bio or job description. The main functions that were focused on were ensuring that the current text values appeared in the pop-up window, that the values could be changed, and that the webpage would accurately update to reflect the changes. The user is able to change their name or bio by using the save button, or if the user does not want to change their profile's values, they can simply exit using the "close" button.
+Additionally, this was one of my first projects implementing JavaScript into a webpage. JavaScript was utilized to create a pop-up window that allows the user to edit their name and bio or job description. The main functions that were focused on were ensuring that the current text values appeared in the pop-up window, that the values could be changed, and that the webpage would accurately update to reflect the changes. The user is able to change their name or bio by using the save button, or if the user does not want to change their profile's values, they can simply exit using the "close" button.
 
-JavaScript was also used to render the 6 element cards using a DOM manipulation, functions, and a for loop. This takes the place of the previous hardcoded element cards that were originally in place.
+JavaScript was also used to render the 6 element cards using a DOM manipulation, functions, and a for loop. This takes the place of the previous hardcoded element cards that were originally in place. To add to the functionality of the webpage, JavaScript was also utilized to execute form validation anytime a user fires an 'input' event.
 
 **Technologies**
 
