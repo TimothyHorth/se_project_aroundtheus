@@ -91,10 +91,6 @@ const setEventListeners = (form, validationConfig) => {
 };
 
 // Function to begin the validation process
-// I was using async becuase I need fillProfileForm() to run before the initial toggleButtonState().
-// Without ensuring that fillProfileForm() executes first, the Submit button for the edit profile is disabled at first
-// since the form values are empty to begin with.
-// I remedied this by adding value properties to the two inputs in the profile modal.
 function enableValidation(validationConfig) {
   const formList = Array.from(
     document.querySelectorAll(validationConfig.formSelector)
