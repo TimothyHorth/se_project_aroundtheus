@@ -1,5 +1,3 @@
-// Kseniya! Thank you so much for helpful tips and information! Everything makes a lot more sense now. Much appreciated! */
-
 // Function to show input error
 const showInputError = (form, inputElement, validationConfig) => {
   const formError = form.querySelector(`#${inputElement.id}-input-error`);

@@ -1,3 +1,6 @@
+// import necessary functions
+import { Card } from "./scripts/Card.js";
+import { openPopup, closePopup } from "./scripts/utils.js";
 //Initialize variables for modal window
 
 // Profile Modal window
@@ -28,10 +31,6 @@ const imageModalImage = imageModal.querySelector(".modal__image");
 const imageModalTitle = imageModal.querySelector(".modal__title_type_image");
 const imageModalCloseButton = imageModal.querySelector("#image-close");
 
-// initialize and define variables for element template and elements div
-const elementTemplate = document.querySelector("#element-template").content;
-const elements = document.querySelector(".elements");
-
 // Using template to create cards
 // Create an array containing all six initialized objects
 const initialCards = [
@@ -61,70 +60,22 @@ const initialCards = [
   },
 ];
 
-// Create a function for editing the element template to return a unique element card
-// Create new card element
-function getCardElement(data) {
-  const cardElement = elementTemplate.querySelector(".element").cloneNode(true);
-  const cardElementTitle = cardElement.querySelector(".element__title");
-  const cardElementImage = cardElement.querySelector(".element__image");
-  const cardElementFavoriteButton = cardElement.querySelector(
-    ".element__favorite-button"
-  );
-  cardElementTitle.textContent = data.name;
-  cardElementImage.alt = `Photo of ${data.name}`;
-  cardElementImage.src = data.link;
-
-  // Image modal function - create function to open image in modal window
-  // Define function for creating a new card element
-  function openImageModal(evt) {
-    imageModalImage.src = evt.target.src;
-    imageModalImage.alt = evt.target.alt;
-    imageModalTitle.textContent = cardElementTitle.textContent;
-    openPopup(imageModal);
-  }
-
-  // Add event listener to image for opening ImageModal if clicked
-  cardElementImage.addEventListener("click", openImageModal);
-
-  // Like Button - create function so that like button is filled in
-  function favoriteButtonAction(evt) {
-    evt.target.classList.toggle("element__favorite-button_active");
-  }
-
-  cardElementFavoriteButton.addEventListener("click", favoriteButtonAction);
-
-  // Trash Button - create function so card is removed
-  const cardElementTrashButton = cardElement.querySelector(
-    ".element__trash-button"
-  );
-  cardElementTrashButton.addEventListener("click", function (evt) {
-    evt.target.closest(".element").remove();
-  });
-
-  // Return cardElement
-  return cardElement;
-}
-
-// Creating a loop using forEach() that passes each object in initialCards to the getCardElement function
-// this for loop creates and adds cards from a template
-initialCards.forEach(function (card) {
-  elements.append(getCardElement(card));
-});
-
 // **** MODAL WINDOWS **** //
 
-//Universal functions for opening and closing modal windows
+//Functions
 
-function openPopup(popup) {
-  popup.classList.add("modal_opened");
-  popup.addEventListener("mousedown", closePopupOnRemoteClick);
-  document.addEventListener("keydown", closePopupOnEsc);
+// Image modal function - create function to open image in modal window
+// Define function for creating a new card element
+function openImageModal(evt) {
+  imageModalImage.src = evt.target.src;
+  imageModalImage.alt = evt.target.alt;
+  imageModalTitle.textContent = cardElementTitle.textContent;
+  openPopup(imageModal);
 }
 
-function closePopup(popup) {
-  popup.classList.remove("modal_opened");
-  popup.removeEventListener("mousedown", closePopupOnRemoteClick);
-  document.removeEventListener("keydown", closePopupOnEsc);
+// Like Button - create function so that like button is filled in
+function favoriteButtonAction(evt) {
+  evt.target.classList.toggle("element__favorite-button_active");
 }
 
 // function for filling in the profile form with current values
@@ -161,8 +112,6 @@ function submitNewCard(evt) {
   resetValidation(newCardModalForm, validationConfig);
 }
 
-// ****EVENTLISTENERS FOR BUTTONS****
-
 // Close modal window by clicking on overlay
 function closePopupOnRemoteClick(evt) {
   if (evt.target === evt.currentTarget) {
@@ -177,6 +126,8 @@ function closePopupOnEsc(evt) {
     closePopup(openedModal);
   }
 }
+
+// ****EVENTLISTENERS****
 
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
@@ -202,3 +153,13 @@ newCardModalForm.addEventListener("submit", submitNewCard);
 imageModalCloseButton.addEventListener("click", function () {
   closePopup(imageModal);
 });
+
+// Creating a loop using forEach() that passes each object in initialCards to the getCardElement function
+// this for loop creates and adds cards from a template
+const renderElements = () => {
+  initialCards.forEach(function (item) {
+    const card = new Card(item, ".elements");
+    const cardElement = generateCard(card);
+    elements.append(cardElement);
+  });
+};
