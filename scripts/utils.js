@@ -12,4 +12,19 @@ function closePopup(popup) {
   document.removeEventListener("keydown", closePopupOnEsc);
 }
 
+// Close modal window by clicking on overlay
+function closePopupOnRemoteClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  }
+}
+
+// Close modal window by pressing the "Escape" button
+function closePopupOnEsc(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".modal_opened");
+    closePopup(openedModal);
+  }
+}
+
 export { openPopup, closePopup };

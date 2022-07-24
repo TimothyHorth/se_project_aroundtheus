@@ -1,6 +1,8 @@
 // import necessary functions
-import { Card } from "./scripts/Card.js";
-import { openPopup, closePopup } from "./scripts/utils.js";
+import { Card } from "./Card.js";
+import { openPopup, closePopup } from "./utils.js";
+import { FormValidator } from "./FormValidator.js";
+
 //Initialize variables for modal window
 
 // Profile Modal window
@@ -27,8 +29,6 @@ const addCardButton = document.querySelector(".profile__add-button");
 
 // Image Modal window
 const imageModal = document.querySelector(".modal_type_image");
-const imageModalImage = imageModal.querySelector(".modal__image");
-const imageModalTitle = imageModal.querySelector(".modal__title_type_image");
 const imageModalCloseButton = imageModal.querySelector("#image-close");
 
 // Using template to create cards
@@ -64,20 +64,6 @@ const initialCards = [
 
 //Functions
 
-// Image modal function - create function to open image in modal window
-// Define function for creating a new card element
-function openImageModal(evt) {
-  imageModalImage.src = evt.target.src;
-  imageModalImage.alt = evt.target.alt;
-  imageModalTitle.textContent = cardElementTitle.textContent;
-  openPopup(imageModal);
-}
-
-// Like Button - create function so that like button is filled in
-function favoriteButtonAction(evt) {
-  evt.target.classList.toggle("element__favorite-button_active");
-}
-
 // function for filling in the profile form with current values
 function fillProfileForm() {
   formName.value = profileName.textContent;
@@ -100,31 +86,15 @@ function updateProfile() {
 // Submit new card into elements
 function submitNewCard(evt) {
   evt.preventDefault();
-  const newCard = { name: cardTitle.value, link: cardImageLink.value };
-  elements.prepend(getCardElement(newCard));
+  const newCard = new Card(
+    { name: cardTitle.value, link: cardImageLink.value },
+    "#element-template"
+  );
+  document.querySelector(".elements").prepend(newCard.generateCard());
   closePopup(newCardModal);
   newCardModalForm.reset();
-  const inputList = Array.from(
-    newCardModalForm.querySelectorAll(".form__input")
-  );
-  const buttonElement = newCardModalForm.querySelector(".form__submit-button");
-  toggleButtonState(inputList, buttonElement, validationConfig);
-  resetValidation(newCardModalForm, validationConfig);
-}
-
-// Close modal window by clicking on overlay
-function closePopupOnRemoteClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup(evt.target);
-  }
-}
-
-// Close modal window by pressing the "Escape" button
-function closePopupOnEsc(evt) {
-  if (evt.key === "Escape") {
-    const openedModal = document.querySelector(".modal_opened");
-    closePopup(openedModal);
-  }
+  newCardModalFormValidator._toggleButtonState();
+  newCardModalFormValidator._resetValidation();
 }
 
 // ****EVENTLISTENERS****
@@ -132,7 +102,7 @@ function closePopupOnEsc(evt) {
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
   fillProfileForm();
-  resetValidation(profileModal, validationConfig);
+  formProfile._resetValidation();
   openPopup(profileModal);
 });
 profileModalCloseButton.addEventListener("click", function () {
@@ -141,15 +111,21 @@ profileModalCloseButton.addEventListener("click", function () {
 profileForm.addEventListener("submit", submitProfile);
 
 // EventListeners for newCard modal form
+
+// Open new card modal when the plus button is clicked
 addCardButton.addEventListener("click", function () {
   openPopup(newCardModal);
 });
+
+// Close new card modal when the close button is clicked
 newCardModalCloseButton.addEventListener("click", function () {
   closePopup(newCardModal);
 });
+
+// Submit new card when the submit button is clicked
 newCardModalForm.addEventListener("submit", submitNewCard);
 
-//EventListener for image modal
+//EventListener for image modal - open image modal when an image is clicked
 imageModalCloseButton.addEventListener("click", function () {
   closePopup(imageModal);
 });
@@ -157,9 +133,39 @@ imageModalCloseButton.addEventListener("click", function () {
 // Creating a loop using forEach() that passes each object in initialCards to the getCardElement function
 // this for loop creates and adds cards from a template
 const renderElements = () => {
+  let elements = document.querySelector(".elements");
   initialCards.forEach(function (item) {
-    const card = new Card(item, ".elements");
-    const cardElement = generateCard(card);
+    const card = new Card(item, "#element-template");
+    const cardElement = card.generateCard();
     elements.append(cardElement);
   });
 };
+
+// INITIALIZING
+// Initializing the configuration object for validation
+const validationConfig = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_inactive",
+  activeInputErrorClass: "form__input-error_active",
+  inputErrorClass: "form__input_type_error",
+  errorClassSingleLine: "form__input-error_type_single-line",
+  errorClassDoubleLine: "form__input-error_type_double-line",
+};
+
+//Validators:
+
+// Initialize validator for the profile form and enable validation
+const formProfile = new FormValidator(validationConfig, profileForm);
+formProfile.enableValidation();
+
+// Initialize validator for the new card form and enable validation
+const newCardModalFormValidator = new FormValidator(
+  validationConfig,
+  newCardModalForm
+);
+newCardModalFormValidator.enableValidation();
+
+// Render the elements
+renderElements();
