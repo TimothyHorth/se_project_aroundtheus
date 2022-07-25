@@ -1,10 +1,11 @@
-import { openPopup } from "./utils.js";
+//import { handleImageClick } from "./index.js";
 
 export class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleImageClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleImageClick = handleImageClick;
   }
 
   _getTemplate() {
@@ -22,9 +23,7 @@ export class Card {
     imageElement.addEventListener("click", (evt) => {
       imageElement.src = evt.target.src;
       imageElement.alt = evt.target.alt;
-      document.querySelector(".modal__title_type_image").textContent =
-        this._element.querySelector(".element__title").textContent;
-      openPopup(document.querySelector(".modal_type_image"));
+      this._handleImageClick(this._element);
     });
 
     // Add event listener to favorite button

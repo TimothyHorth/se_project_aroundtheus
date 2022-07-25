@@ -98,6 +98,12 @@ function submitNewCard(evt) {
   newCardModalFormValidator._resetValidation();
 }
 
+const handleImageClick = (elem) => {
+  document.querySelector(".modal__title_type_image").textContent =
+    elem.querySelector(".element__title").textContent;
+  openPopup(document.querySelector(".modal_type_image"));
+};
+
 // ****EVENTLISTENERS****
 
 // EventListeners for profile modal window
@@ -133,7 +139,7 @@ imageModalCloseButton.addEventListener("click", function () {
 
 // Create a function for creating a card
 const createCard = (item) => {
-  const card = new Card(item, "#element-template");
+  const card = new Card(item, "#element-template", handleImageClick);
   const cardElement = card.generateCard();
   return cardElement;
 };
