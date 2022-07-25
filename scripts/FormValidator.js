@@ -29,11 +29,7 @@ export class FormValidator {
 
   // Function to hide input error
   _hideInputError = (inputElement, formError) => {
-    if (
-      inputElement.classList.contains(this._validationConfig.inputErrorClass)
-    ) {
-      inputElement.classList.remove(this._validationConfig.inputErrorClass);
-    }
+    inputElement.classList.remove(this._validationConfig.inputErrorClass);
     formError.classList.remove(this._validationConfig.activeInputErrorClass);
   };
 
@@ -65,7 +61,7 @@ export class FormValidator {
   };
 
   // Function to toggle Submit button state (disabled or not)
-  _toggleButtonState = () => {
+  toggleButtonState = () => {
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(
         this._validationConfig.inactiveButtonClass
@@ -82,7 +78,7 @@ export class FormValidator {
   // Function to initially set all form and element states to the correct display, as well as
   // set event listeners on each input to run validation upon new input.
   _setEventListeners = () => {
-    this._toggleButtonState();
+    this.toggleButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         const formError = this._form.querySelector(
@@ -90,7 +86,7 @@ export class FormValidator {
         );
         this._removeInputErrorClasses(inputElement, formError);
         this._toggleInputError(inputElement, formError);
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
     });
   };

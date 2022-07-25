@@ -18,15 +18,14 @@ export class Card {
 
   _setEventListeners() {
     // Add event listener to image for opening ImageModal if clicked
-    this._element
-      .querySelector(".element__image")
-      .addEventListener("click", (evt) => {
-        document.querySelector(".modal__image").src = evt.target.src;
-        document.querySelector(".modal__image").alt = evt.target.alt;
-        document.querySelector(".modal__title_type_image").textContent =
-          this._element.querySelector(".element__title").textContent;
-        openPopup(document.querySelector(".modal_type_image"));
-      });
+    const imageElement = this._element.querySelector(".element__image");
+    imageElement.addEventListener("click", (evt) => {
+      imageElement.src = evt.target.src;
+      imageElement.alt = evt.target.alt;
+      document.querySelector(".modal__title_type_image").textContent =
+        this._element.querySelector(".element__title").textContent;
+      openPopup(document.querySelector(".modal_type_image"));
+    });
 
     // Add event listener to favorite button
     this._element
@@ -38,10 +37,15 @@ export class Card {
     // Add event listener to trash button
     this._element
       .querySelector(".element__trash-button")
-      .addEventListener("click", (evt) => {
-        evt.target.closest(".element").remove();
+      .addEventListener("click", () => {
+        this._remove();
       });
   }
+
+  _remove = () => {
+    this._element.remove();
+    this._element = null;
+  };
 
   // Create a function for editing the element template to return a unique element card
   // Create new card element
@@ -50,10 +54,9 @@ export class Card {
     this._setEventListeners();
 
     this._element.querySelector(".element__title").textContent = this._name;
-    this._element.querySelector(
-      ".element__image"
-    ).alt = `Photo of ${this._name}`;
-    this._element.querySelector(".element__image").src = this._link;
+    const imageElement = this._element.querySelector(".element__image");
+    imageElement.alt = `Photo of ${this._name}`;
+    imageElement.src = this._link;
 
     return this._element;
   }

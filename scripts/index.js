@@ -26,6 +26,7 @@ const newCardModalForm = document.querySelector(".modal__form_type_card");
 const cardTitle = document.querySelector("#title");
 const cardImageLink = document.querySelector("#image-link");
 const addCardButton = document.querySelector(".profile__add-button");
+const cardsList = document.querySelector(".elements");
 
 // Image Modal window
 const imageModal = document.querySelector(".modal_type_image");
@@ -86,14 +87,14 @@ function updateProfile() {
 // Submit new card into elements
 function submitNewCard(evt) {
   evt.preventDefault();
-  const newCard = new Card(
-    { name: cardTitle.value, link: cardImageLink.value },
-    "#element-template"
-  );
-  document.querySelector(".elements").prepend(newCard.generateCard());
+  const newCard = createCard({
+    name: cardTitle.value,
+    link: cardImageLink.value,
+  });
+  cardsList.prepend(newCard);
   closePopup(newCardModal);
   newCardModalForm.reset();
-  newCardModalFormValidator._toggleButtonState();
+  newCardModalFormValidator.toggleButtonState();
   newCardModalFormValidator._resetValidation();
 }
 
@@ -130,13 +131,19 @@ imageModalCloseButton.addEventListener("click", function () {
   closePopup(imageModal);
 });
 
+// Create a function for creating a card
+const createCard = (item) => {
+  const card = new Card(item, "#element-template");
+  const cardElement = card.generateCard();
+  return cardElement;
+};
+
 // Creating a loop using forEach() that passes each object in initialCards to the getCardElement function
 // this for loop creates and adds cards from a template
 const renderElements = () => {
-  let elements = document.querySelector(".elements");
+  const elements = document.querySelector(".elements");
   initialCards.forEach(function (item) {
-    const card = new Card(item, "#element-template");
-    const cardElement = card.generateCard();
+    const cardElement = createCard(item);
     elements.append(cardElement);
   });
 };
