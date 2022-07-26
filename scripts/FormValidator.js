@@ -42,7 +42,7 @@ export class FormValidator {
   }
 
   // Function to reset form validation
-  _resetValidation() {
+  resetValidation() {
     this._inputList.forEach((inputElement) => {
       const formError = this._form.querySelector(
         `#${inputElement.id}-input-error`

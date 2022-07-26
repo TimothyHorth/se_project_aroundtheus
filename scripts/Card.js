@@ -20,10 +20,8 @@ export class Card {
   _setEventListeners() {
     // Add event listener to image for opening ImageModal if clicked
     const imageElement = this._element.querySelector(".element__image");
-    imageElement.addEventListener("click", (evt) => {
-      imageElement.src = evt.target.src;
-      imageElement.alt = evt.target.alt;
-      this._handleImageClick(this._element);
+    imageElement.addEventListener("click", () => {
+      this._handleImageClick(this._name, this._link);
     });
 
     // Add event listener to favorite button
@@ -36,9 +34,7 @@ export class Card {
     // Add event listener to trash button
     this._element
       .querySelector(".element__trash-button")
-      .addEventListener("click", () => {
-        this._remove();
-      });
+      .addEventListener("click", this._remove);
   }
 
   _remove = () => {

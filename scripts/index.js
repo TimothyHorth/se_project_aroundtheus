@@ -30,6 +30,8 @@ const cardsList = document.querySelector(".elements");
 
 // Image Modal window
 const imageModal = document.querySelector(".modal_type_image");
+const imageModalImage = document.querySelector(".modal__image");
+const imageModalTitle = document.querySelector(".modal__title_type_image");
 const imageModalCloseButton = imageModal.querySelector("#image-close");
 
 // Using template to create cards
@@ -95,12 +97,13 @@ function submitNewCard(evt) {
   closePopup(newCardModal);
   newCardModalForm.reset();
   newCardModalFormValidator.toggleButtonState();
-  newCardModalFormValidator._resetValidation();
+  newCardModalFormValidator.resetValidation();
 }
 
-const handleImageClick = (elem) => {
-  document.querySelector(".modal__title_type_image").textContent =
-    elem.querySelector(".element__title").textContent;
+const handleImageClick = (name, link) => {
+  imageModalTitle.textContent = name;
+  imageModalImage.src = link;
+  imageModalImage.alt = `Photo of ${name}`;
   openPopup(document.querySelector(".modal_type_image"));
 };
 
@@ -109,7 +112,7 @@ const handleImageClick = (elem) => {
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
   fillProfileForm();
-  formProfile._resetValidation();
+  formProfile.resetValidation();
   openPopup(profileModal);
 });
 profileModalCloseButton.addEventListener("click", function () {
