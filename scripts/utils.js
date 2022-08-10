@@ -1,3 +1,5 @@
+import { _handleEscClose } from "./Popup.js";
+
 // Open popup function
 function openPopup(popup) {
   popup.classList.add("modal_opened");

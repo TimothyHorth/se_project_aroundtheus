@@ -1,11 +1,11 @@
-//import { handleImageClick } from "./index.js";
+import PopupwithImage from "./PopupWithImage.js";
 
 export class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
-    this._handleImageClick = handleImageClick;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -21,7 +21,7 @@ export class Card {
     // Add event listener to image for opening ImageModal if clicked
     const imageElement = this._element.querySelector(".element__image");
     imageElement.addEventListener("click", () => {
-      this._handleImageClick(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     });
 
     // Add event listener to favorite button

@@ -13,8 +13,8 @@ const profileModalCloseButton = document.querySelector(
 );
 const profileName = document.querySelector(".profile__info-name-text");
 const profileAbout = document.querySelector(".profile__info-bio");
-const formName = document.querySelector("#name");
-const formDescription = document.querySelector("#about-me");
+export const formName = document.querySelector("#name");
+export const formDescription = document.querySelector("#about-me");
 const profileForm = document.querySelector(".modal__form_type_profile");
 
 // Card Modal window
@@ -100,7 +100,7 @@ function submitNewCard(evt) {
   newCardModalFormValidator.resetValidation();
 }
 
-const handleImageClick = (name, link) => {
+const handleCardClick = (name, link) => {
   imageModalTitle.textContent = name;
   imageModalImage.src = link;
   imageModalImage.alt = `Photo of ${name}`;
@@ -142,7 +142,7 @@ imageModalCloseButton.addEventListener("click", function () {
 
 // Create a function for creating a card
 const createCard = (item) => {
-  const card = new Card(item, "#element-template", handleImageClick);
+  const card = new Card(item, "#element-template", handleCardClick);
   const cardElement = card.generateCard();
   return cardElement;
 };
