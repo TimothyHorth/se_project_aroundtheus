@@ -1,3 +1,6 @@
+// import the main css stylesheet
+import "../pages/index.css";
+
 // import necessary functions
 import { Card } from "./Card.js";
 import { openPopup, closePopup } from "./utils.js";
