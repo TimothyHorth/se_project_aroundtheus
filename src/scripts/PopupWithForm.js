@@ -1,3 +1,11 @@
+import Popup from "./Popup.js";
+import {
+  formName,
+  formDescription,
+  cardTitle,
+  cardImageLink,
+} from "./Constants.js";
+
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, callback) {
     this._popupSelector = popupSelector;
@@ -9,6 +17,12 @@ export default class PopupWithForm extends Popup {
 
   _getInputValues() {
     const inputList = this._popup.querySelectorAll(".form__input");
+    if (this._popupSelector === ".modal_type_profile") {
+      return { name: formName.value, bio: formDescription.value };
+    }
+    if (this._popupSelector === ".modal_type_card") {
+      return { title: cardTitle.value, link: cardImageLink.value };
+    }
   }
 
   setEventListeners() {

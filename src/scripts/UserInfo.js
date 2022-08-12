@@ -1,4 +1,4 @@
-import { formName, formDescription } from "./index.js";
+import { profileName, profileAbout } from "./Constants.js";
 
 export default class UserInfo {
   constructor({ nameSelector, bioSelector }) {
@@ -9,12 +9,12 @@ export default class UserInfo {
   getUserInfo() {
     const name = document.querySelector(nameSelector).textContent;
     const bio = document.querySelector(bioSelector).textContent;
-    const userInfo = { name: name, bio: bio };
-    return userInfo;
+    const currentUserInfo = { name: name, bio: bio };
+    return currentUserInfo;
   }
 
-  setUserInfo(userInfo) {
-    formName.value = userInfo.name;
-    formDescription.value = userInfo.bio;
+  setUserInfo(newUserInfo) {
+    profileName.textContent = newUserInfo.name;
+    profileAbout.textContent = newUserInfo.bio;
   }
 }

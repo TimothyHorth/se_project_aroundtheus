@@ -1,5 +1,3 @@
-import { openPopup, closePopup } from "./utils";
-
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
@@ -7,14 +5,18 @@ export default class Popup {
 
   // Open popup function
   open() {
-    openPopup(this._popup);
+    this._popup.classList.add("modal_opened");
+    this._popup.addEventListener("mousedown", closePopupOnRemoteClick);
+    document.addEventListener("keydown", _handleEscClose);
   }
 
   close() {
-    closePopup(this._popup);
+    this._popup.classList.remove("modal_opened");
+    this._popup.removeEventListener("mousedown", closePopupOnRemoteClick);
+    document.removeEventListener("keydown", _handleEscClose);
   }
 
-  export _handleEscClose(evt) {
+  _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.close();
     }
