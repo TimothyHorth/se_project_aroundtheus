@@ -1,38 +1,23 @@
 // import the main css stylesheet
 import "../pages/index.css";
 
-// import necessary functions
-import { Card } from "./Card.js";
-import Popup from "./Popup.js";
-import { FormValidator } from "./FormValidator.js";
+// import
+import Card from "./Card.js";
 import Section from "./Section.js";
-
-//Initialize variables for modal window
-
-import {
-  profileModal,
-  profileEditButton,
-  profileModalCloseButton,
-  profileName,
-  profileAbout,
-  formName,
-  formDescription,
-  profileForm,
-  newCardModal,
-  newCardModalCloseButton,
-  newCardModalForm,
-  cardTitle,
-  cardImageLink,
-  addCardButton,
-  cardsList,
-  imageModal,
-  imageModalImage,
-  imageModalTitle,
-  imageModalCloseButton,
-} from "./Constants.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo";
+import { FormValidator } from "./FormValidator.js";
+
+// import constants
+import {
+  profileEditButton,
+  formName,
+  formDescription,
+  profileForm,
+  newCardModalForm,
+  addCardButton,
+} from "./Constants.js";
 
 // Using template to create cards
 // Create an array containing all six initialized objects

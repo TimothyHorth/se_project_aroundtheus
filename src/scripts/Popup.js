@@ -10,13 +10,14 @@ export default class Popup {
     }
   }
 
+  // Method for closing popup by pressing Esc key
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.close();
     }
   }
 
-  // Open popup function
+  // Open popup
   open() {
     this._popup.classList.add("modal_opened");
     this._popup.addEventListener("mousedown", (evt) => {
@@ -27,6 +28,7 @@ export default class Popup {
     });
   }
 
+  // Close popup
   close() {
     this._popup.classList.remove("modal_opened");
     this._popup.removeEventListener("mousedown", (evt) => {
@@ -37,6 +39,7 @@ export default class Popup {
     });
   }
 
+  // Set EventListeners
   setEventListeners() {
     this._popup
       .querySelector(".modal__close-button")
