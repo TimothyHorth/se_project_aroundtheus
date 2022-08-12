@@ -1,5 +1,5 @@
 // import the main css stylesheet
-// import "../pages/index.css";
+import "../pages/index.css";
 
 // import necessary functions
 import { Card } from "./Card.js";
@@ -30,6 +30,9 @@ import {
   imageModalTitle,
   imageModalCloseButton,
 } from "./Constants.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo";
 
 // Using template to create cards
 // Create an array containing all six initialized objects
@@ -60,6 +63,39 @@ const initialCards = [
   },
 ];
 
+// Create popups
+const modalProfile = new Popup(".modal_type_profile");
+const modalCard = new Popup(".modal_type_card");
+const modalImage = new Popup(".modal_type_image");
+
+modalProfile.setEventListeners();
+modalCard.setEventListeners();
+modalImage.setEventListeners();
+
+// Profile
+const formProfilee = new PopupWithForm(".modal_type_profile", profileFunction);
+formProfilee.setEventListeners();
+// Start FUNCTION
+function profileFunction() {
+  const profileValues = formProfilee._getInputValues();
+  const userInfo = new UserInfo(
+    ".profile__info-name-text",
+    ".profile__info-bio"
+  );
+  userInfo.setUserInfo(profileValues);
+}
+
+// Card
+const formCard = new PopupWithForm(".modal_type_card", cardFunction);
+formCard.setEventListeners();
+// Start FUNCTION
+function cardFunction() {
+  const cardValues = formCard._getInputValues();
+  const card = new Card(cardValues, "#element-template".handleCardClick);
+  const cardElement = card.generateCard();
+  cardList.addItem(cardElement);
+}
+
 // **** MODAL WINDOWS **** //
 
 //Functions
@@ -74,7 +110,7 @@ const initialCards = [
 function submitProfile(evt) {
   evt.preventDefault();
   updateProfile();
-  closePopup(profileModal);
+  modalProfile.close();
 }
 
 // // Function for updating profile name and bio
@@ -103,19 +139,21 @@ const handleCardClick = (name, link) => {
   imageModalImage.src = link;
   imageModalImage.alt = `Photo of ${name}`;
   openPopup(document.querySelector(".modal_type_image"));
+  modalImage.open();
 };
 
 // ****EVENTLISTENERS****
 
 // EventListeners for profile modal window
 profileEditButton.addEventListener("click", function () {
-  fillProfileForm();
+  // fillProfileForm();
   formProfile.resetValidation();
-  openPopup(profileModal);
+  modalProfile.open();
+  // openPopup(profileModal);
 });
 
 profileModalCloseButton.addEventListener("click", function () {
-  closePopup(profileModal);
+  modalProfile.close();
 });
 
 profileForm.addEventListener("submit", submitProfile);
@@ -124,12 +162,12 @@ profileForm.addEventListener("submit", submitProfile);
 
 // Open new card modal when the plus button is clicked
 addCardButton.addEventListener("click", function () {
-  openPopup(newCardModal);
+  modalCard.open();
 });
 
 // Close new card modal when the close button is clicked
 newCardModalCloseButton.addEventListener("click", function () {
-  closePopup(newCardModal);
+  modalCard.close();
 });
 
 // Submit new card when the submit button is clicked
@@ -140,22 +178,22 @@ imageModalCloseButton.addEventListener("click", function () {
   closePopup(imageModal);
 });
 
-// Create a function for creating a card
-const createCard = (item) => {
-  const card = new Card(item, "#element-template", handleCardClick);
-  const cardElement = card.generateCard();
-  return cardElement;
-};
+// // Create a function for creating a card
+// const createCard = (item) => {
+//   const card = new Card(item, "#element-template", handleCardClick);
+//   const cardElement = card.generateCard();
+//   return cardElement;
+//};
 
 // Creating a loop using forEach() that passes each object in initialCards to the getCardElement function
-// this for loop creates and adds cards from a template
-const renderElements = () => {
-  const elements = document.querySelector(".elements");
-  initialCards.forEach(function (item) {
-    const cardElement = createCard(item);
-    elements.append(cardElement);
-  });
-};
+// // this for loop creates and adds cards from a template
+// const renderElements = () => {
+//   const elements = document.querySelector(".elements");
+//   initialCards.forEach(function (item) {
+//     const cardElement = createCard(item);
+//     elements.append(cardElement);
+//   });
+// };
 
 // INITIALIZING
 // Initializing the configuration object for validation
@@ -183,9 +221,6 @@ const newCardModalFormValidator = new FormValidator(
 );
 newCardModalFormValidator.enableValidation();
 
-// // Render the elements
-// renderElements();
-
 const cardList = new Section(
   {
     items: initialCards,
@@ -197,3 +232,6 @@ const cardList = new Section(
   },
   ".elements"
 );
+
+// Render items
+cardList.renderer();

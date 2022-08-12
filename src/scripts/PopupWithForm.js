@@ -8,8 +8,8 @@ import {
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, callback) {
-    this._popupSelector = popupSelector;
-    this._popup = document.querySelector(this._popupSelector);
+    super(popupSelector);
+    this._popup = document.querySelector(popupSelector);
     this._popupForm = this._popup.querySelector(".modal__form");
     this._closeButton = this._popup.querySelector(".modal__close-button");
     this._callback = callback;
@@ -26,9 +26,9 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    super._setEventListeners();
-    this._popupForm.setEventListener("submit", this._callback);
-    this._closeButton.setEventListener("click", close);
+    super.setEventListeners();
+    this._popupForm.addEventListener("submit", this._callback);
+    this._closeButton.addEventListener("click", close);
   }
 
   close() {

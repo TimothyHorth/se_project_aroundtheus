@@ -3,17 +3,11 @@ export default class Popup {
     this._popup = document.querySelector(popupSelector);
   }
 
-  // Open popup function
-  open() {
-    this._popup.classList.add("modal_opened");
-    this._popup.addEventListener("mousedown", closePopupOnRemoteClick);
-    document.addEventListener("keydown", _handleEscClose);
-  }
-
-  close() {
-    this._popup.classList.remove("modal_opened");
-    this._popup.removeEventListener("mousedown", closePopupOnRemoteClick);
-    document.removeEventListener("keydown", _handleEscClose);
+  // Close modal window by clicking on overlay
+  closePopupOnRemoteClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      this.close();
+    }
   }
 
   _handleEscClose(evt) {
@@ -22,16 +16,32 @@ export default class Popup {
     }
   }
 
+  // Open popup function
+  open() {
+    this._popup.classList.add("modal_opened");
+    this._popup.addEventListener("mousedown", (evt) => {
+      this.closePopupOnRemoteClick(evt);
+    });
+    document.addEventListener("keydown", (evt) => {
+      this._handleEscClose(evt);
+    });
+  }
+
+  close() {
+    this._popup.classList.remove("modal_opened");
+    this._popup.removeEventListener("mousedown", (evt) => {
+      this.closePopupOnRemoteClick(evt);
+    });
+    document.removeEventListener("keydown", (evt) => {
+      this._handleEscClose(evt);
+    });
+  }
+
   setEventListeners() {
     this._popup
       .querySelector(".modal__close-button")
-      .addEventListener("click", close);
-  }
-
-  // Close modal window by clicking on overlay
-  closePopupOnRemoteClick(evt) {
-    if (evt.target === evt.currentTarget) {
-      this.close();
-    }
+      .addEventListener("click", () => {
+        this.close;
+      });
   }
 }
