@@ -89,9 +89,7 @@ function submitProfile() {
 
 // Callback function for modalCard
 export function submitCard() {
-  const inputValues = modalCard._getInputValues();
-  const card = new Card(inputValues, "#element-template", handleCardClick);
-  const cardElement = card.generateCard();
+  const cardElement = modalCard.generateNewCardFromForm();
   cardList.addFirst(cardElement);
 
   modalCard.close();
@@ -110,7 +108,7 @@ function fillProfileForm(userValues) {
 }
 
 // handleCardClick function to pass to Card for modalImage
-const handleCardClick = (name, link) => {
+export const handleCardClick = (name, link) => {
   modalImage.open(name, link);
 };
 

@@ -1,4 +1,6 @@
 import Popup from "./Popup.js";
+import Card from "./Card.js";
+import { handleCardClick } from "./index.js";
 import {
   formName,
   formDescription,
@@ -22,6 +24,14 @@ export default class PopupWithForm extends Popup {
     if (this._popupSelector == ".modal_type_card") {
       return { title: cardTitle.value, link: cardImageLink.value };
     }
+  }
+
+  // Created this method since _getInputValues is a private method
+  generateNewCardFromForm() {
+    const inputValues = this._getInputValues();
+    const card = new Card(inputValues, "#element-template", handleCardClick);
+    const cardElement = card.generateCard();
+    return cardElement;
   }
 
   setEventListeners() {
