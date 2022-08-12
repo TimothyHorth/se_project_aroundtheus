@@ -14,9 +14,13 @@ This webpage is the seventh project in the Software Engineer program at Practicu
 
 Additionally, this was one of my first projects implementing JavaScript into a webpage for functionality. JavaScript was utilized to create a pop-up window that allows the user to edit their name and bio or job description. The main functions that were focused on were ensuring that the current text values appeared in the pop-up window, that the values could be changed, and that the webpage would accurately update to reflect the changes after the form was submitted. The user is able to change their name or bio by using the save button, or if the user does not want to change their profile's values, they can simply exit using the "close" button or clicking outside of the popup window.
 
-JavaScript was also used to render the 6 initial element cards using DOM manipulation. This takes the place of the previous hardcoded element cards that were originally in place. To add to the functionality of the webpage, JavaScript was also utilized to execute form validation anytime a user fires an 'input' event.
+JavaScript was also used to render the 6 initial element cards using DOM manipulation. This takes the place of the previous hardcoded element cards that were originally in place. To add to the functionality of the webpage, JavaScript was also utilized to execute form validation anytime a user fires an 'input' event. Inheritance, encapuslation, and polymorphism were incorporated into this project. Classes were created for new location cards, a general popup window, an image popup, and form popups. Anytime a new card is created, the **Card** class is utilized to generate a new HTML element. The **FormValidator** class was used on both popup windows.
 
-The most recent update to this project was incorporating classes and encapsulation into the JavaScript files. A class was created for a new card, and another class was created for form validation. Anytime a new card is created, the **card** class is utilized. Additionally, the **FormValidator** class was used on both popup windows.
+The latest update to this project was implemenation of Webpack to bundle the project's files together. The JavaScript files, CSS files, and dependencies were linked together and made more concise, and then connected to the HTML file in order to make the code more efficient. Webpack does this through the following:
+
+- The JavaScript code is rewritten so that functionality is maintained but can be used with older JavaScript versions. This negates the need to worry about browser compatibility.
+- CSS stylesheets are minified. The spaces, line breaks, and comments are all removed since the browser does not need them.
+- Vendor prefixes are automatically set so that once again browser compatability is not a concern.
 
 **Technologies**
 
@@ -28,7 +32,9 @@ The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, 
 - Vertical stacking with z-index
 - Property transitions
 - Media queries
-- JavaScript (DOM manipulation, Classes, Encapsulation, Form Validation)
+- JavaScript (DOM manipulation, Classes, Inheritance, Encapsulation, Polymorphism, Form Validation)
+- Node Project Manager (NPM) / Node.js
+- Webpack
 
 **Project**
 

@@ -1,9 +1,10 @@
 import Popup from "./Popup.js";
-import { imageModalImage } from "./Constants.js";
+import { imageModalImage, imageModalTitle } from "./Constants.js";
 
 export default class PopupWithImage extends Popup {
-  constructor() {
-    super(this._popup);
+  constructor(popupSelector) {
+    super(popupSelector);
+    this._popup = document.querySelector(popupSelector);
   }
 
   open(name, link) {
@@ -11,6 +12,6 @@ export default class PopupWithImage extends Popup {
     //Add an image to the popup and the corresponding image src attribute along with a caption for the image
     imageModalImage.src = link;
     imageModalImage.alt = `Photo of ${name}`;
-    this._popup.querySelector(".modal__title").textContent = name;
+    imageModalTitle.textContent = name;
   }
 }

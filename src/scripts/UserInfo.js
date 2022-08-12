@@ -1,20 +1,24 @@
-import { profileName, profileAbout } from "./Constants.js";
+import { modalProfile } from "./index.js";
 
 export default class UserInfo {
-  constructor({ nameSelector, bioSelector }) {
-    this._nameSelector = nameSelector;
-    this._bioSelector = bioSelector;
+  constructor(data) {
+    this._nameSelector = data.name;
+    this._bioSelector = data.bio;
+    this._profileName = document.querySelector(this._nameSelector);
+    this._profileBio = document.querySelector(this._bioSelector);
   }
 
   getUserInfo() {
-    const name = document.querySelector(nameSelector).textContent;
-    const bio = document.querySelector(bioSelector).textContent;
-    const currentUserInfo = { name: name, bio: bio };
-    return currentUserInfo;
+    console.log(this._nameSelector);
+    return {
+      name: this._profileName.textContent,
+      bio: this._profileBio.textContent,
+    };
   }
 
-  setUserInfo(newUserInfo) {
-    profileName.textContent = newUserInfo.name;
-    profileAbout.textContent = newUserInfo.bio;
+  setUserInfo() {
+    const profileValues = modalProfile._getInputValues();
+    this._profileName.textContent = profileValues.name;
+    this._profileBio.textContent = profileValues.bio;
   }
 }

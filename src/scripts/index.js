@@ -36,6 +36,7 @@ import UserInfo from "./UserInfo";
 
 // Using template to create cards
 // Create an array containing all six initialized objects
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -63,39 +64,54 @@ const initialCards = [
   },
 ];
 
-// Create popups
-const modalProfile = new Popup(".modal_type_profile");
-const modalCard = new Popup(".modal_type_card");
-const modalImage = new Popup(".modal_type_image");
+// Initialize cardList
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, "#element-template", handleCardClick);
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    },
+  },
+  ".elements"
+);
 
+// Initialize instances of the Popup classes for each modal window
+export const modalProfile = new PopupWithForm(
+  ".modal_type_profile",
+  submitProfile
+);
+export const modalCard = new PopupWithForm(".modal_type_card", submitCard);
+const modalImage = new PopupWithImage(".modal_type_image");
+
+// Set Event Listeners
 modalProfile.setEventListeners();
 modalCard.setEventListeners();
 modalImage.setEventListeners();
 
-//
+// Initialize an instance of the UserInfo class
+const userInfo = new UserInfo({
+  name: ".profile__info-name-text",
+  bio: ".profile__info-bio",
+});
 
-// Profile
-const formProfilee = new PopupWithForm(".modal_type_profile", profileFunction);
-formProfilee.setEventListeners();
-// Start FUNCTION
-function profileFunction() {
-  const profileValues = formProfilee._getInputValues();
-  const userInfo = new UserInfo(
-    ".profile__info-name-text",
-    ".profile__info-bio"
-  );
-  userInfo.setUserInfo(profileValues);
+// Callback function for modalProfile
+function submitProfile() {
+  userInfo.setUserInfo();
+  modalProfile.close();
 }
 
-// Card
-const formCard = new PopupWithForm(".modal_type_card", cardFunction);
-formCard.setEventListeners();
-// Start FUNCTION
-function cardFunction() {
-  const cardValues = formCard._getInputValues();
-  const card = new Card(cardValues, "#element-template".handleCardClick);
+// Callback function for modalCard
+export function submitCard() {
+  const inputValues = modalCard._getInputValues();
+  const card = new Card(inputValues, "#element-template", handleCardClick);
   const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
+  cardList.addFirst(cardElement);
+
+  modalCard.close();
+  newCardModalFormValidator.toggleButtonState();
+  newCardModalFormValidator.resetValidation();
 }
 
 // **** MODAL WINDOWS **** //
@@ -103,91 +119,29 @@ function cardFunction() {
 //Functions
 
 // function for filling in the profile form with current values
-function fillProfileForm() {
-  formName.value = profileName.textContent;
-  formDescription.value = profileAbout.textContent;
+function fillProfileForm(userValues) {
+  formName.value = userValues.name;
+  formDescription.value = userValues.bio;
 }
 
-// Submit profile modal window to change name and bio values & close window
-function submitProfile(evt) {
-  evt.preventDefault();
-  updateProfile();
-  modalProfile.close();
-}
-
-// // Function for updating profile name and bio
-function updateProfile() {
-  profileName.textContent = formName.value;
-  profileAbout.textContent = formDescription.value;
-}
-
-// Submit new card into elements
-function submitNewCard(evt) {
-  evt.preventDefault();
-  const newCard = createCard({
-    name: cardTitle.value,
-    link: cardImageLink.value,
-  });
-  cardsList.prepend(newCard);
-  closePopup(newCardModal);
-  newCardModalForm.reset();
-  newCardModalFormValidator.toggleButtonState();
-  newCardModalFormValidator.resetValidation();
-}
-
-// handleCardClick function to pass to Card
+// handleCardClick function to pass to Card for modalImage
 const handleCardClick = (name, link) => {
-  imageModalTitle.textContent = name;
-  imageModalImage.src = link;
-  imageModalImage.alt = `Photo of ${name}`;
-  openPopup(document.querySelector(".modal_type_image"));
-  modalImage.open();
+  modalImage.open(name, link);
 };
 
 // ****EVENTLISTENERS****
 
-// EventListeners for profile modal window
-////////////////////////////////////////////////////////////////////////
 profileEditButton.addEventListener("click", function () {
-  fillProfileForm();
+  const userValues = userInfo.getUserInfo();
+  fillProfileForm(userValues);
   formProfile.resetValidation();
   modalProfile.open();
-  // openPopup(profileModal);
 });
-
-profileModalCloseButton.addEventListener("click", function () {
-  modalProfile.close();
-});
-
-////////////////////////////////////////////////////////////
-profileForm.addEventListener("submit", submitProfile);
-
-// EventListeners for newCard modal form
 
 // Open new card modal when the plus button is clicked
 addCardButton.addEventListener("click", function () {
   modalCard.open();
 });
-
-// Close new card modal when the close button is clicked
-newCardModalCloseButton.addEventListener("click", function () {
-  modalCard.close();
-});
-
-// Submit new card when the submit button is clicked
-newCardModalForm.addEventListener("submit", submitNewCard);
-
-//EventListener for image modal - open image modal when an image is clicked
-imageModalCloseButton.addEventListener("click", function () {
-  closePopup(imageModal);
-});
-
-// // Create a function for creating a card
-// const createCard = (item) => {
-//   const card = new Card(item, "#element-template", handleCardClick);
-//   const cardElement = card.generateCard();
-//   return cardElement;
-//};
 
 // INITIALIZING
 // Initializing the configuration object for validation
@@ -214,18 +168,6 @@ const newCardModalFormValidator = new FormValidator(
   newCardModalForm
 );
 newCardModalFormValidator.enableValidation();
-
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const card = new Card(item, "#element-template", handleCardClick);
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
-    },
-  },
-  ".elements"
-);
 
 // Render items
 cardList.renderer();
