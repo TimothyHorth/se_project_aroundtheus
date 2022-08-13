@@ -123,6 +123,7 @@ profileEditButton.addEventListener("click", function () {
 
 // Open new card modal when the plus button is clicked
 addCardButton.addEventListener("click", function () {
+  newCardModalFormValidator.resetValidation();
   modalCard.open();
 });
 
