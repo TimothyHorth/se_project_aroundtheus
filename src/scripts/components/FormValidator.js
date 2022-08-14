@@ -31,15 +31,17 @@ export class FormValidator {
   _hideInputError = (inputElement, formError) => {
     inputElement.classList.remove(this._validationConfig.inputErrorClass);
     formError.classList.remove(this._validationConfig.activeInputErrorClass);
-  };
-
-  // Function to remove error classes
-  _removeInputErrorClasses(inputElement, formError) {
-    formError.classList.remove(this._validationConfig.activeInputErrorClass);
-    inputElement.classList.remove(this._validationConfig.inputErrorClass);
     formError.classList.remove(this._validationConfig.errorClassSingleLine);
     formError.classList.remove(this._validationConfig.errorClassDoubleLine);
-  }
+  };
+
+  // // Function to remove error classes
+  // _removeInputErrorClasses(inputElement, formError) {
+  //   formError.classList.remove(this._validationConfig.activeInputErrorClass);
+  //   inputElement.classList.remove(this._validationConfig.inputErrorClass);
+  //   formError.classList.remove(this._validationConfig.errorClassSingleLine);
+  //   formError.classList.remove(this._validationConfig.errorClassDoubleLine);
+  // }
 
   // Function to reset form validation
   resetValidation() {
@@ -47,7 +49,7 @@ export class FormValidator {
       const formError = this._form.querySelector(
         `#${inputElement.id}-input-error`
       );
-      this._removeInputErrorClasses(inputElement, formError);
+      this._hideInputError(inputElement, formError);
     });
   }
 
@@ -84,7 +86,7 @@ export class FormValidator {
         const formError = this._form.querySelector(
           `#${inputElement.id}-input-error`
         );
-        this._removeInputErrorClasses(inputElement, formError);
+        this._hideInputError(inputElement, formError);
         this._toggleInputError(inputElement, formError);
         this.toggleButtonState();
       });

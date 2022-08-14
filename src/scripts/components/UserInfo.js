@@ -1,4 +1,4 @@
-import { modalProfile } from "./index.js";
+import { modalProfile } from "../../pages/index.js";
 
 export default class UserInfo {
   constructor(data) {
@@ -9,16 +9,15 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    console.log(this._nameSelector);
     return {
       name: this._profileName.textContent,
-      bio: this._profileBio.textContent,
+      aboutme: this._profileBio.textContent,
     };
   }
 
-  setUserInfo() {
-    const profileValues = modalProfile._getInputValues();
+  setUserInfo(profileValues) {
+    // const profileValues = modalProfile._getInputValues();
     this._profileName.textContent = profileValues.name;
-    this._profileBio.textContent = profileValues.bio;
+    this._profileBio.textContent = profileValues.aboutme;
   }
 }

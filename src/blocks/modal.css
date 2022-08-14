@@ -10,18 +10,14 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   pointer-events: none;
-  transition: visibility 0s 0.25s, opacity 0.5s linear;
-}
-
-.modal > .modal_opened {
-  opacity: 1;
+  transition: visibility 0.2s, opacity 0.2s linear;
 }
 
 .modal_opened {
   opacity: 1;
   visibility: visible;
   pointer-events: all;
-  transition: visibility 0s, opacity 0s linear;
+  transition: visibility 0.2s, opacity 0.2s linear;
 }
 
 .modal_type_profile {

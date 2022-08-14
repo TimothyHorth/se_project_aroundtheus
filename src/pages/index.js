@@ -1,13 +1,13 @@
 // import the main css stylesheet
-import "../pages/index.css";
+import "./index.css";
 
 // import
-import Card from "./Card.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo";
-import { FormValidator } from "./FormValidator.js";
+import Card from "../scripts/components/Card.js";
+import Section from "../scripts/components/Section.js";
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import UserInfo from "../scripts/components/UserInfo";
+import { FormValidator } from "../scripts/components/FormValidator.js";
 
 // import constants
 import {
@@ -17,45 +17,22 @@ import {
   profileForm,
   newCardModalForm,
   addCardButton,
-} from "./Constants.js";
+  initialCards,
+} from "../scripts/utils/Constants.js";
 
-// Using template to create cards
-// Create an array containing all six initialized objects
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg",
-  },
-];
+//
+function createCard(item) {
+  const card = new Card(item, "#element-template", handleCardClick);
+  const cardElement = card.generateCard();
+  return cardElement;
+}
 
 // Initialize cardList
 const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#element-template", handleCardClick);
-      const cardElement = card.generateCard();
+      const cardElement = createCard(item);
       cardList.addItem(cardElement);
     },
   },
@@ -83,29 +60,24 @@ const userInfo = new UserInfo({
 
 // Callback function for modalProfile
 function submitProfile() {
-  userInfo.setUserInfo();
+  const profileValues = modalProfile._getInputValues();
+  userInfo.setUserInfo(profileValues);
   modalProfile.close();
 }
 
 // Callback function for modalCard
 export function submitCard() {
-  const cardElement = modalCard.generateNewCardFromForm();
+  const inputValues = this._getInputValues();
+  console.log(inputValues);
+  const cardElement = createCard(inputValues);
   cardList.addFirst(cardElement);
 
   modalCard.close();
-  newCardModalFormValidator.toggleButtonState();
-  newCardModalFormValidator.resetValidation();
 }
 
 // **** MODAL WINDOWS **** //
 
 //Functions
-
-// function for filling in the profile form with current values
-function fillProfileForm(userValues) {
-  formName.value = userValues.name;
-  formDescription.value = userValues.bio;
-}
 
 // handleCardClick function to pass to Card for modalImage
 export const handleCardClick = (name, link) => {
@@ -116,19 +88,22 @@ export const handleCardClick = (name, link) => {
 
 profileEditButton.addEventListener("click", function () {
   const userValues = userInfo.getUserInfo();
-  fillProfileForm(userValues);
-  formProfile.resetValidation();
+  modalProfile.setInputValues(userValues);
+  formValidators["edit profile"].resetValidation();
+  formValidators["edit profile"].toggleButtonState();
   modalProfile.open();
 });
 
 // Open new card modal when the plus button is clicked
 addCardButton.addEventListener("click", function () {
-  newCardModalFormValidator.resetValidation();
+  formValidators["edit card"].resetValidation();
+  formValidators["edit card"].toggleButtonState();
   modalCard.open();
 });
 
 // INITIALIZING
 // Initializing the configuration object for validation
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -140,18 +115,22 @@ const validationConfig = {
   errorClassDoubleLine: "form__input-error_type_double-line",
 };
 
-//Validators:
+// Initialize object for storing forms
 
-// Initialize validator for the profile form and enable validation
-const formProfile = new FormValidator(validationConfig, profileForm);
-formProfile.enableValidation();
+const formValidators = {};
 
-// Initialize validator for the new card form and enable validation
-const newCardModalFormValidator = new FormValidator(
-  validationConfig,
-  newCardModalForm
-);
-newCardModalFormValidator.enableValidation();
+// enable validation
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
 
 // Render items
 cardList.renderer();
