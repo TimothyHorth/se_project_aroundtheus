@@ -12,10 +12,6 @@ import { FormValidator } from "../scripts/components/FormValidator.js";
 // import constants
 import {
   profileEditButton,
-  formName,
-  formDescription,
-  profileForm,
-  newCardModalForm,
   addCardButton,
   initialCards,
 } from "../scripts/utils/Constants.js";
@@ -32,8 +28,7 @@ const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const cardElement = createCard(item);
-      cardList.addItem(cardElement);
+      return createCard(item);
     },
   },
   ".elements"
@@ -68,8 +63,7 @@ function submitProfile() {
 // Callback function for modalCard
 export function submitCard() {
   const inputValues = this._getInputValues();
-  const cardElement = createCard(inputValues);
-  cardList.addFirst(cardElement);
+  cardList.addItem(inputValues);
 
   modalCard.close();
 }
