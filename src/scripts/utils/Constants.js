@@ -58,6 +58,19 @@ const initialCards = [
   },
 ];
 
+// Initializing the configuration object for validation
+
+const validationConfig = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_inactive",
+  activeInputErrorClass: "form__input-error_active",
+  inputErrorClass: "form__input_type_error",
+  errorClassSingleLine: "form__input-error_type_single-line",
+  errorClassDoubleLine: "form__input-error_type_double-line",
+};
+
 export {
   profileModal,
   profileEditButton,
@@ -79,4 +92,5 @@ export {
   imageModalTitle,
   imageModalCloseButton,
   initialCards,
+  validationConfig,
 };

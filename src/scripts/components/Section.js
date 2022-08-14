@@ -5,7 +5,7 @@ export default class Section {
     this._container = document.querySelector(containerSelector);
   }
 
-  renderer() {
+  renderItems() {
     this._items.forEach((item) => {
       const card = this._renderer(item);
       this._container.append(card);

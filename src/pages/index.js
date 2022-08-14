@@ -14,6 +14,7 @@ import {
   profileEditButton,
   addCardButton,
   initialCards,
+  validationConfig,
 } from "../scripts/utils/Constants.js";
 
 //
@@ -55,14 +56,14 @@ const userInfo = new UserInfo({
 
 // Callback function for modalProfile
 function submitProfile() {
-  const profileValues = modalProfile._getInputValues();
+  const profileValues = modalProfile.getInputValues();
   userInfo.setUserInfo(profileValues);
   modalProfile.close();
 }
 
 // Callback function for modalCard
 export function submitCard() {
-  const inputValues = this._getInputValues();
+  const inputValues = this.getInputValues();
   cardList.addItem(inputValues);
 
   modalCard.close();
@@ -94,20 +95,6 @@ addCardButton.addEventListener("click", function () {
   modalCard.open();
 });
 
-// INITIALIZING
-// Initializing the configuration object for validation
-
-const validationConfig = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_inactive",
-  activeInputErrorClass: "form__input-error_active",
-  inputErrorClass: "form__input_type_error",
-  errorClassSingleLine: "form__input-error_type_single-line",
-  errorClassDoubleLine: "form__input-error_type_double-line",
-};
-
 // Initialize object for storing forms
 
 const formValidators = {};
@@ -126,4 +113,4 @@ const enableValidation = (config) => {
 enableValidation(validationConfig);
 
 // Render items
-cardList.renderer();
+cardList.renderItems();

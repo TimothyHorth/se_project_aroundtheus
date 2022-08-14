@@ -10,7 +10,7 @@ export default class PopupWithForm extends Popup {
     this._callback = callback;
   }
 
-  _getInputValues() {
+  getInputValues() {
     this._formValues = {};
 
     this._inputList.forEach((input) => {
@@ -35,13 +35,9 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._popupForm.reset();
 
-    // I was only using setTimout because you can see the forms reset before the modals
-    // are fully closed
-    // const delayInMilliseconds = 500;
-    // setTimeout(() => {
-    //   this._popupForm.reset();
-    // }, delayInMilliseconds);
+    setTimeout(() => {
+      this._popupForm.reset();
+    }, 500);
   }
 }
