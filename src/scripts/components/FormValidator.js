@@ -35,14 +35,6 @@ export class FormValidator {
     formError.classList.remove(this._validationConfig.errorClassDoubleLine);
   };
 
-  // // Function to remove error classes
-  // _removeInputErrorClasses(inputElement, formError) {
-  //   formError.classList.remove(this._validationConfig.activeInputErrorClass);
-  //   inputElement.classList.remove(this._validationConfig.inputErrorClass);
-  //   formError.classList.remove(this._validationConfig.errorClassSingleLine);
-  //   formError.classList.remove(this._validationConfig.errorClassDoubleLine);
-  // }
-
   // Function to reset form validation
   resetValidation() {
     this._inputList.forEach((inputElement) => {

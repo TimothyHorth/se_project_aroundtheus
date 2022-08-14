@@ -68,7 +68,6 @@ function submitProfile() {
 // Callback function for modalCard
 export function submitCard() {
   const inputValues = this._getInputValues();
-  console.log(inputValues);
   const cardElement = createCard(inputValues);
   cardList.addFirst(cardElement);
 

@@ -1,12 +1,4 @@
 import Popup from "./Popup.js";
-// import Card from "./Card.js";
-// import { handleCardClick } from "../../pages/index.js";
-// import {
-//   formName,
-//   formDescription,
-//   cardTitle,
-//   cardImageLink,
-// } from "../utils/Constants.js";
 
 export default class PopupWithForm extends Popup {
   constructor(popupSelector, callback) {

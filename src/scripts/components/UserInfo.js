@@ -16,7 +16,6 @@ export default class UserInfo {
   }
 
   setUserInfo(profileValues) {
-    // const profileValues = modalProfile._getInputValues();
     this._profileName.textContent = profileValues.name;
     this._profileBio.textContent = profileValues.aboutme;
   }
