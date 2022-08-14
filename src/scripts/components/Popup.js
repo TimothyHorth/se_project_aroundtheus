@@ -20,23 +20,21 @@ export default class Popup {
   // Open popup
   open() {
     this._popup.classList.add("modal_opened");
-    this._popup.addEventListener("mousedown", (evt) => {
-      this.closePopupOnRemoteClick(evt);
-    });
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    this._popup.addEventListener(
+      "mousedown",
+      this.closePopupOnRemoteClick.bind(this)
+    );
+    document.addEventListener("keydown", this._handleEscClose.bind(this));
   }
 
   // Close popup
   close() {
     this._popup.classList.remove("modal_opened");
-    this._popup.removeEventListener("mousedown", (evt) => {
-      this.closePopupOnRemoteClick(evt);
-    });
-    document.removeEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    this._popup.removeEventListener(
+      "mousedown",
+      this.closePopupOnRemoteClick.bind(this)
+    );
+    document.removeEventListener("keydown", this._handleEscClose.bind(this));
   }
 
   // Set EventListeners
