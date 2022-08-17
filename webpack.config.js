@@ -40,13 +40,14 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif|woff(2)?|eot|tff|otf)$/,
+        test: /\.(png|svg|jpg|gif|ico|woff(2)?|eot|tff|otf)$/,
         type: "asset/resource",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
+      favicon: "./src/favicon.ico",
       template: "./src/index.html",
     }),
     new CleanWebpackPlugin(),
