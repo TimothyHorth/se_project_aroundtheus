@@ -29,6 +29,25 @@ import {
 
 ///////////////////////////// INITIALIZE ///////////////////////////////////
 
+const userID = fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+  headers: {
+    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+  },
+})
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      Promise.reject("Error: bad request");
+    }
+  })
+  .then((user) => {
+    return user["_id"];
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 // Initialize cardList
 
 fetch("https://around.nomoreparties.co/v1/group-12/cards", {
@@ -87,7 +106,8 @@ function createCard(item) {
     item,
     "#element-template",
     handleCardClick,
-    openVerifyModal
+    openVerifyModal,
+    userID
   );
   const cardElement = card.generateCard();
   return cardElement;

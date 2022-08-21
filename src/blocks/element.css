@@ -22,6 +22,10 @@
   cursor: pointer;
 }
 
+.element__trash-button_hidden {
+  display: none;
+}
+
 .element__trash-button:hover {
   opacity: 0.6;
 }
@@ -57,6 +61,11 @@
   margin: 0;
 }
 
+.element__like-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .element__favorite-button {
   width: 21px;
   min-width: 21px;
@@ -76,6 +85,16 @@
 
 .element__favorite-button_active {
   background-image: url("../images/favorite_button_active.svg");
+}
+
+.element__likes-counter {
+  margin: 0;
+  padding-top: 3px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
 }
 
 @media screen and (max-width: 992px) {

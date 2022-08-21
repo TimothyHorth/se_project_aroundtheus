@@ -112,11 +112,11 @@ export {
   validationConfig,
 };
 
-// Adding and removing likes
-fetch("https://around.nomoreparties.co/v1/group-12/cards/likes/cardId", {
-  method: "PUT",
-  headers: {
-    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-    "Content-Type": "application/json",
-  },
-});
+// // Adding and removing likes
+// fetch("https://around.nomoreparties.co/v1/group-12/cards/likes/cardId", {
+//   method: "PUT",
+//   headers: {
+//     authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+//     "Content-Type": "application/json",
+//   },
+// });
