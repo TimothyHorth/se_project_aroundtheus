@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, openVerifyModal) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._openVerifyModal = openVerifyModal;
   }
 
   _getTemplate() {
@@ -32,7 +33,7 @@ export default class Card {
     // Add event listener to trash button
     this._element
       .querySelector(".element__trash-button")
-      .addEventListener("click", this._remove);
+      .addEventListener("click", this._openVerifyModal);
   }
 
   _remove = () => {

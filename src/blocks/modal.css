@@ -1,3 +1,5 @@
+/* MODAL */
+
 .modal {
   position: fixed;
   display: flex;
@@ -33,6 +35,16 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.modal_type_verify {
+  margin: 0;
+}
+
+.modal_type_profile-image {
+  margin: 0;
+}
+
+/* MODAL CONTAINER */
+
 .modal__container {
   display: flex;
   flex-direction: column;
@@ -60,6 +72,21 @@
   background-color: transparent;
   border-radius: 0px;
 }
+
+.modal__container_type_verify {
+  margin: auto;
+  max-width: 430px;
+  width: 100%;
+  height: 181px;
+}
+
+.modal__container_type_profile-image {
+  margin: auto;
+  max-width: 430px;
+  width: 100%;
+}
+
+/* MODAL CLOSE-BUTTON */
 
 .modal__close-button {
   background-image: url("../images/close_icon.svg");
@@ -94,6 +121,12 @@
   right: -34px;
 }
 
+.modal__close-button_type_verify {
+  margin: 0;
+}
+
+/* MODAL TITLE */
+
 .modal__title {
   font-family: "Inter", sans-serif;
   font-size: 24px;
@@ -121,6 +154,13 @@
   padding: 10px 0 0 0;
 }
 
+.modal__title_type_verify {
+  margin: 0;
+  padding-bottom: 38px;
+}
+
+/* MODAL FORM */
+
 .modal__form {
   padding: 36px;
   display: flex;
@@ -135,6 +175,8 @@
   margin: 0;
 }
 
+/* MODAL IMAGE */
+
 .modal__image {
   display: block;
   max-width: 75vw;
@@ -142,7 +184,34 @@
   object-fit: contain;
 }
 
+/* MODAL SUBMIT-BUTTON */
+
+.modal__submit-button {
+  max-width: 358px;
+  height: 50px;
+  margin-left: 36px;
+  color: white;
+  background-color: black;
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  transition: opacity 0.15s linear;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.modal__submit-button:hover {
+  opacity: 0.8;
+}
+
+/* media screen at 660px */
 @media screen and (max-width: 660px) {
+  /* MODAL CONTAINER */
+
   .modal__container {
     max-width: 282px;
   }
@@ -152,10 +221,16 @@
     max-height: 75vh;
   }
 
+  .modal__container_type_verify {
+    height: 155px;
+  }
+
+  /* MODAL CLOSE-BUTTON */
+
   .modal__close-button {
     width: 20px;
     height: 20px;
-    top: -40px;
+    top: -35px;
     right: 9px;
   }
 
@@ -165,6 +240,8 @@
     top: -26px;
     right: -26px;
   }
+
+  /* MODAL TITLE */
 
   .modal__title {
     padding: 25px 22px 0;
@@ -176,7 +253,23 @@
     padding: 10px 0 0 0;
   }
 
+  .modal__title_type_verify {
+    padding-bottom: 30px;
+    font-size: 18px;
+  }
+
+  /* MODAL FORM */
+
   .modal__form {
-    padding: 75px 22px 25px;
+    padding: 45px 22px 25px;
+  }
+
+  /* MODAL SUBMIT-BUTTON */
+
+  .modal__submit-button {
+    max-width: 238px;
+    height: 50px;
+    margin-left: 22px;
+    font-size: 14px;
   }
 }

@@ -1,52 +1,69 @@
-// import the main css stylesheet
+///////////////////////////// Import ///////////////////////////////////
+
+// import main css stylesheet
 import "./index.css";
 
-// import
+// import classes from respective JS files
 import Card from "../scripts/components/Card.js";
 import Section from "../scripts/components/Section.js";
+import Popup from "../scripts/components/Popup";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import UserInfo from "../scripts/components/UserInfo";
-import { FormValidator } from "../scripts/components/FormValidator.js";
+import ProfileImageLink from "../scripts/components/ProfileImageLink.js";
+import FormValidator from "../scripts/components/FormValidator.js";
 
-// import constants
+// import constants from utils/Constants.js
 import {
   profileEditButton,
+  profileImageOverlay,
+  profileEditImage,
+  profileSubmitButton,
+  profileImageSubmitButton,
+  cardSubmitButton,
   addCardButton,
-  initialCards,
   validationConfig,
 } from "../scripts/utils/Constants.js";
 
-//
-function createCard(item) {
-  const card = new Card(item, "#element-template", handleCardClick);
-  const cardElement = card.generateCard();
-  return cardElement;
-}
+////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////// INITIALIZE ///////////////////////////////////
 
 // Initialize cardList
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      return createCard(item);
-    },
+
+fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+  headers: {
+    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
   },
-  ".elements"
-);
+})
+  .then((res) => {
+    return res.json();
+  })
+  .then((initialCards) => {
+    return new Section(
+      {
+        items: initialCards,
+        renderer: (item) => {
+          return createCard(item);
+        },
+      },
+      ".elements"
+    );
+  })
+  .then((cardList) => {
+    // Render items
+    cardList.renderItems();
+  });
 
 // Initialize instances of the Popup classes for each modal window
-export const modalProfile = new PopupWithForm(
-  ".modal_type_profile",
-  submitProfile
-);
-export const modalCard = new PopupWithForm(".modal_type_card", submitCard);
+const modalProfile = new PopupWithForm(".modal_type_profile", submitProfile);
+const modalCard = new PopupWithForm(".modal_type_card", submitCard);
 const modalImage = new PopupWithImage(".modal_type_image");
-
-// Set Event Listeners
-modalProfile.setEventListeners();
-modalCard.setEventListeners();
-modalImage.setEventListeners();
+const modalVerify = new Popup(".modal_type_verify");
+const modalProfileImage = new PopupWithForm(
+  ".modal_type_profile-image",
+  submitProfileImage
+);
 
 // Initialize an instance of the UserInfo class
 const userInfo = new UserInfo({
@@ -54,52 +71,157 @@ const userInfo = new UserInfo({
   bio: ".profile__info-bio",
 });
 
-// Callback function for modalProfile
-function submitProfile() {
-  const profileValues = modalProfile.getInputValues();
-  userInfo.setUserInfo(profileValues);
-  modalProfile.close();
+// Initialize an instance of the profileImageLink class
+const profileImageLink = new ProfileImageLink(".profile__avatar");
+
+// Initialize object for storing forms
+const formValidators = {};
+
+////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////// FUNCTIONS ///////////////////////////////////
+
+// function for creating a card tile for a new location
+function createCard(item) {
+  const card = new Card(
+    item,
+    "#element-template",
+    handleCardClick,
+    openVerifyModal
+  );
+  const cardElement = card.generateCard();
+  return cardElement;
 }
-
-// Callback function for modalCard
-export function submitCard() {
-  const inputValues = this.getInputValues();
-  cardList.addItem(inputValues);
-
-  modalCard.close();
-}
-
-// **** MODAL WINDOWS **** //
-
-//Functions
 
 // handleCardClick function to pass to Card for modalImage
-export const handleCardClick = (name, link) => {
+const handleCardClick = (name, link) => {
   modalImage.open(name, link);
 };
 
-// ****EVENTLISTENERS****
+// callback function for modalProfile when form is submitted to submit user info
+function submitProfile() {
+  renderSaving(true, profileSubmitButton);
+  const profileValues = modalProfile.getInputValues();
+  // Updating profile user info
+  fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+    method: "PATCH",
+    headers: {
+      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: profileValues.name,
+      about: profileValues.about,
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((userData) => {
+      userInfo.setUserInfo(userData);
+    })
+    .then(() => {
+      modalProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderSaving(false, profileSubmitButton);
+    });
+}
 
-profileEditButton.addEventListener("click", function () {
-  const userValues = userInfo.getUserInfo();
-  modalProfile.setInputValues(userValues);
-  formValidators["edit profile"].resetValidation();
-  formValidators["edit profile"].toggleButtonState();
-  modalProfile.open();
-});
+// callback function for modalCard when form is submitted
+function submitCard() {
+  renderSaving(true, cardSubmitButton);
+  const cardValues = modalCard.getInputValues();
+  // Adding a new card
+  fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+    method: "POST",
+    headers: {
+      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: cardValues.name,
+      link: cardValues.link,
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((cardData) => {
+      const cardList = new Section(
+        {
+          items: cardData,
+          renderer: (item) => {
+            return createCard(item);
+          },
+        },
+        ".elements"
+      );
+      cardList.addItem(cardData);
+    })
+    .then(() => {
+      modalCard.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderSaving(false, profileSubmitButton);
+    });
+}
 
-// Open new card modal when the plus button is clicked
-addCardButton.addEventListener("click", function () {
-  formValidators["edit card"].resetValidation();
-  formValidators["edit card"].toggleButtonState();
-  modalCard.open();
-});
+// callback function for submitting profile image through modalProfileImage
+// callback function for modalProfileImage when form is submitted to edit profile image
+function submitProfileImage() {
+  renderSaving(true, profileImageSubmitButton);
+  const inputValue = modalProfileImage.getInputValues();
+  // Updating profile user info
+  fetch("https://around.nomoreparties.co/v1/group-12/users/me/avatar", {
+    method: "PATCH",
+    headers: {
+      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      avatar: inputValue.link,
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((imageLink) => {
+      profileImageLink.setProfileImage(imageLink);
+    })
+    .then(() => {
+      modalProfileImage.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderSaving(false, profileImageSubmitButton);
+    });
+}
 
-// Initialize object for storing forms
+// callback function to open the verify modal window
+// passed as a callback so that it can be applied to new cards when they are generated
+function openVerifyModal() {
+  modalVerify.open();
+}
 
-const formValidators = {};
+// Function for opening modalProfileImage window to edit profile picture
+function openProfileImageModal() {
+  const imageLink = profileImageLink.getProfileImageLink();
+  modalProfileImage.setInputValues(imageLink);
+  formValidators["edit profile image"].resetValidation();
+  formValidators["edit profile image"].toggleButtonState();
+  modalProfileImage.open();
+}
 
-// enable validation
+// function for enabling validation
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
@@ -110,7 +232,68 @@ const enableValidation = (config) => {
   });
 };
 
-enableValidation(validationConfig);
+// NEW FUNCTION FOR LOADING
+function renderSaving(isSaving, modalSubmitButton) {
+  if (isSaving) {
+    modalSubmitButton.textContent = "Saving...";
+  } else {
+    modalSubmitButton.textContent = "Save";
+  }
+}
 
-// Render items
-cardList.renderItems();
+////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////// EVENTLISTENERS ///////////////////////////////
+
+// Run the 'setEventLIsteners' method for each modal window
+modalProfile.setEventListeners();
+modalCard.setEventListeners();
+modalImage.setEventListeners();
+modalVerify.setEventListeners();
+modalProfileImage.setEventListeners();
+
+// set eventlistener for opening the modalProfile window when the edit button is clicked
+profileEditButton.addEventListener("click", function () {
+  const userValues = userInfo.getUserInfo();
+  modalProfile.setInputValues(userValues);
+  formValidators["edit profile"].resetValidation();
+  formValidators["edit profile"].toggleButtonState();
+  modalProfile.open();
+});
+
+// set eventlistener for new modalCard window when the plus (add new card) button is clicked
+addCardButton.addEventListener("click", function () {
+  formValidators["edit card"].resetValidation();
+  formValidators["edit card"].toggleButtonState();
+  modalCard.open();
+});
+
+// add eventlistener to open profile image modal
+profileImageOverlay.addEventListener("click", function () {
+  openProfileImageModal();
+});
+
+// add eventlistener to open profile image modal
+profileEditImage.addEventListener("click", function () {
+  openProfileImageModal();
+});
+
+////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////// PROGRAM ///////////////////////////////////
+
+// Get initial user information
+fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+  headers: {
+    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+  },
+})
+  .then((res) => {
+    return res.json();
+  })
+  .then((userData) => {
+    userInfo.setUserInfo(userData);
+  });
+
+// call the 'enableValidation' function so that forms can be validated
+enableValidation(validationConfig);

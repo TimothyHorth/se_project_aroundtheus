@@ -17,8 +17,6 @@ export default class Popup {
     }
   };
 
-  // Thanks for the clarification and insight on modifying the methods to arrow methods!
-
   // Open popup
   open() {
     this._popup.classList.add("modal_opened");

@@ -18,6 +18,7 @@
   max-width: 173px;
   min-width: 127px;
   width: 39.375%;
+  transition: opacity 0.15s linear;
 }
 
 @media screen and (max-width: 992px) {

@@ -6,9 +6,44 @@
   padding: 40px calc((100% - 880px) / 2) 51px;
 }
 
+.profile__img-wrapper {
+  margin: 0;
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
 .profile__avatar {
-  max-width: 120px;
+  width: 120px;
+  height: 120px;
   border-radius: 60px;
+}
+
+.profile__img-wrapper .profile__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  display: none;
+  background-color: black;
+}
+
+.profile__img-wrapper:hover .profile__overlay {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.profile__edit-image {
+  display: none;
+  margin: 0;
+  position: absolute;
+  top: 47px;
+  left: 47px;
+}
+
+.profile__img-wrapper:hover .profile__edit-image {
+  display: block;
 }
 
 .profile__info {
