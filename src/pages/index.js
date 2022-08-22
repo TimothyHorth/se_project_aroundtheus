@@ -21,6 +21,7 @@ import {
   profileSubmitButton,
   profileImageSubmitButton,
   cardSubmitButton,
+  verifySubmitButton,
   addCardButton,
   validationConfig,
 } from "../scripts/utils/Constants.js";
@@ -29,24 +30,25 @@ import {
 
 ///////////////////////////// INITIALIZE ///////////////////////////////////
 
-const userID = fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
-  headers: {
-    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-  },
-})
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      Promise.reject("Error: bad request");
-    }
-  })
-  .then((user) => {
-    return user["_id"];
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const userID = "391b92fefbd8b073eecef090";
+// const userID = fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+//   headers: {
+//     authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+//   },
+// })
+//   .then((res) => {
+//     if (res.ok) {
+//       return res.json();
+//     } else {
+//       Promise.reject("Error: bad request");
+//     }
+//   })
+//   .then((user) => {
+//     return user["_id"];
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 // Initialize cardList
 
@@ -260,6 +262,31 @@ function renderSaving(isSaving, modalSubmitButton) {
     modalSubmitButton.textContent = "Save";
   }
 }
+
+// // NEW FUNCTION FOR DELETE
+// function deleteCard(card) {
+//   fetch(`https://around.nomoreparties.co/v1/group-12/cards/${card.id}`, {
+//     method: "DELETE",
+//     headers: {
+//       authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(card),
+//   })
+//     .then((res) => {
+//       if (res.ok) {
+//         return res.json();
+//       } else {
+//         Promise.reject("Error: bad request");
+//       }
+//     })
+//     .then(() => {
+//       modalVerify.close();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
 
 ////////////////////////////////////////////////////////////////////////////
 

@@ -4,6 +4,8 @@ export default class Card {
     this._link = data.link;
     this._likes = data.likes;
     this._id = data._id;
+    this._owner = data.owner;
+    this._owner_id = data.owner._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._openVerifyModal = openVerifyModal;
@@ -32,11 +34,59 @@ export default class Card {
       .addEventListener("click", (evt) => {
         evt.target.classList.toggle("element__favorite-button_active");
         if (evt.target.classList.contains("element__favorite-button_active")) {
-          this._likesCounter.textContent =
-            parseInt(this._likesCounter.textContent) + 1;
+          const updatedArr = this._likes.push(this._owner);
+          fetch(
+            `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
+            {
+              method: "PUT",
+              headers: {
+                authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                likes: updatedArr,
+              }),
+            }
+          )
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              } else {
+                Promise.reject("Error: bad request");
+              }
+            })
+            .then((res) => {
+              console.log(res);
+              this._likesCounter.textContent = res.likes.length;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
-          this._likesCounter.textContent =
-            parseInt(this._likesCounter.textContent) - 1;
+          fetch(
+            `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
+            {
+              method: "DELETE",
+              headers: {
+                authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              } else {
+                Promise.reject("Error: bad request");
+              }
+            })
+            .then((res) => {
+              console.log(res);
+              this._likesCounter.textContent = res.likes.length;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       });
 
@@ -50,10 +100,22 @@ export default class Card {
   };
 
   _checkTrashCan = () => {
-    if (this._id !== this._userID) {
-      console.log(this._userID);
-      console.log(this._id);
+    if (this._owner_id !== this._userID) {
       this._trashButton.classList.add("element__trash-button_hidden");
+    }
+  };
+
+  _checkFavoriteButtonForActiveStatus = () => {
+    const isFound = this._likes.some((user) => {
+      if (user._id === this._userID) {
+        return true;
+      }
+    });
+
+    if (isFound) {
+      this._element
+        .querySelector("#favorite-button")
+        .classList.add("element__favorite-button_active");
     }
   };
 
@@ -63,6 +125,7 @@ export default class Card {
     this._element = this._getTemplate();
     this._trashButton = this._element.querySelector(".element__trash-button");
     this._likesCounter = this._element.querySelector(".element__likes-counter");
+    this._checkFavoriteButtonForActiveStatus();
     this._setEventListeners();
 
     this._element.querySelector(".element__title").textContent = this._name;

@@ -39,6 +39,7 @@ const profileEditPencil = document.querySelector(".profile__edit-image");
 const profileImageOverlay = document.querySelector(".profile__overlay");
 const profileEditImage = document.querySelector(".profile__edit-image");
 const profileImageSubmitButton = document.querySelector("#save-profile-image");
+const verifySubmitButton = document.querySelector("#verify");
 
 // Create an array containing all six initialized objects
 
@@ -98,6 +99,7 @@ export {
   profileSubmitButton,
   profileImageSubmitButton,
   cardSubmitButton,
+  verifySubmitButton,
   newCardModal,
   newCardModalCloseButton,
   newCardModalForm,
@@ -111,12 +113,3 @@ export {
   imageModalCloseButton,
   validationConfig,
 };
-
-// // Adding and removing likes
-// fetch("https://around.nomoreparties.co/v1/group-12/cards/likes/cardId", {
-//   method: "PUT",
-//   headers: {
-//     authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-//     "Content-Type": "application/json",
-//   },
-// });
