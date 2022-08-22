@@ -12,6 +12,7 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import UserInfo from "../scripts/components/UserInfo";
 import ProfileImageLink from "../scripts/components/ProfileImageLink.js";
 import FormValidator from "../scripts/components/FormValidator.js";
+import Api from "../scripts/components/Api.js";
 
 // import constants from utils/Constants.js
 import {
@@ -31,50 +32,17 @@ import {
 ///////////////////////////// INITIALIZE ///////////////////////////////////
 
 const userID = "391b92fefbd8b073eecef090";
-// const userID = fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
-//   headers: {
-//     authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-//   },
-// })
-//   .then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     } else {
-//       Promise.reject("Error: bad request");
-//     }
-//   })
-//   .then((user) => {
-//     return user["_id"];
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
 
-// Initialize cardList
+// initialize userID
+//const userID = user._id;
 
-fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-12",
   headers: {
     authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+    "Content-Type": "application/json",
   },
-})
-  .then((res) => {
-    return res.json();
-  })
-  .then((initialCards) => {
-    return new Section(
-      {
-        items: initialCards,
-        renderer: (item) => {
-          return createCard(item);
-        },
-      },
-      ".elements"
-    );
-  })
-  .then((cardList) => {
-    // Render items
-    cardList.renderItems();
-  });
+});
 
 // Initialize instances of the Popup classes for each modal window
 const modalProfile = new PopupWithForm(".modal_type_profile", submitProfile);
@@ -92,6 +60,38 @@ const userInfo = new UserInfo({
   bio: ".profile__info-bio",
 });
 
+// Initialize user info
+const user = api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo(userData);
+    return userData;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// Initialize cardList
+
+api
+  .getInitialCards()
+  .then((initialCards) => {
+    console.log(initialCards);
+    return new Section(
+      {
+        items: initialCards,
+        renderer: (item) => {
+          return createCard(item);
+        },
+      },
+      ".elements"
+    );
+  })
+  .then((cardList) => {
+    // Render items
+    cardList.renderItems();
+  });
+
 // Initialize an instance of the profileImageLink class
 const profileImageLink = new ProfileImageLink(".profile__avatar");
 
@@ -108,6 +108,7 @@ function createCard(item) {
     item,
     "#element-template",
     handleCardClick,
+    handleLikeClick,
     openVerifyModal,
     userID
   );
@@ -125,20 +126,7 @@ function submitProfile() {
   renderSaving(true, profileSubmitButton);
   const profileValues = modalProfile.getInputValues();
   // Updating profile user info
-  fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
-    method: "PATCH",
-    headers: {
-      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: profileValues.name,
-      about: profileValues.about,
-    }),
-  })
-    .then((res) => {
-      return res.json();
-    })
+  api.editProfileInfo
     .then((userData) => {
       userInfo.setUserInfo(userData);
     })
@@ -158,20 +146,8 @@ function submitCard() {
   renderSaving(true, cardSubmitButton);
   const cardValues = modalCard.getInputValues();
   // Adding a new card
-  fetch("https://around.nomoreparties.co/v1/group-12/cards", {
-    method: "POST",
-    headers: {
-      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: cardValues.name,
-      link: cardValues.link,
-    }),
-  })
-    .then((res) => {
-      return res.json();
-    })
+  api
+    .addNewCard(cardValues)
     .then((cardData) => {
       const cardList = new Section(
         {
@@ -201,19 +177,7 @@ function submitProfileImage() {
   renderSaving(true, profileImageSubmitButton);
   const inputValue = modalProfileImage.getInputValues();
   // Updating profile user info
-  fetch("https://around.nomoreparties.co/v1/group-12/users/me/avatar", {
-    method: "PATCH",
-    headers: {
-      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      avatar: inputValue.link,
-    }),
-  })
-    .then((res) => {
-      return res.json();
-    })
+  api.editProfileImage
     .then((imageLink) => {
       profileImageLink.setProfileImage(imageLink);
     })
@@ -237,19 +201,9 @@ function openVerifyModal() {
 
 // test function
 function deleteCard(card_id) {
-  fetch(`https://around.nomoreparties.co/v1/group-12/cards/${card_id}`, {
-    method: "DELETE",
-    headers: {
-      authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        Promise.reject("Error: bad request");
-      }
+  api.deleteCard
+    .catch((err) => {
+      console.log(err);
     })
     .catch((err) => {
       console.log(err);
@@ -285,16 +239,14 @@ function renderSaving(isSaving, modalSubmitButton) {
   }
 }
 
+// NEW function for handle like
+function handleLikeClick(card) {
+  api.changeLikeCardStatus(card.id);
+}
+
 ////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////// EVENTLISTENERS ///////////////////////////////
-
-// Run the 'setEventLIsteners' method for each modal window
-modalProfile.setEventListeners();
-modalCard.setEventListeners();
-modalImage.setEventListeners();
-modalVerify.setEventListeners();
-modalProfileImage.setEventListeners();
 
 // set eventlistener for opening the modalProfile window when the edit button is clicked
 profileEditButton.addEventListener("click", function () {
@@ -326,18 +278,12 @@ profileEditImage.addEventListener("click", function () {
 
 ///////////////////////////// PROGRAM ///////////////////////////////////
 
-// Get initial user information
-fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
-  headers: {
-    authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-  },
-})
-  .then((res) => {
-    return res.json();
-  })
-  .then((userData) => {
-    userInfo.setUserInfo(userData);
-  });
+// Run the 'setEventLIsteners' method for each modal window
+modalProfile.setEventListeners();
+modalCard.setEventListeners();
+modalImage.setEventListeners();
+modalVerify.setEventListeners();
+modalProfileImage.setEventListeners();
 
 // call the 'enableValidation' function so that forms can be validated
 enableValidation(validationConfig);

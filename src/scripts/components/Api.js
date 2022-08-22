@@ -1,32 +1,73 @@
-class Api {
+export default class Api {
   constructor(options) {
-    this._options = options;
+    this._url = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  _handleServerResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
+
+  getWebpageInfo() {
+    return Promise.all([this.getInitialCards(), this.getUserInfo()]);
+  }
+
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    }).then((res) => this._handleServerResponse(res));
   }
 
   getInitialCards() {
-    return fetch("https://around.nomoreparties.co/v1/gorup-42/cards", {
-      headers: {
-        authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return fetch(`${this._url}/cards`, {
+      headers: this._headers,
+    }).then((res) => this._handleServerResponse(res));
   }
 
-  // other methods
-}
+  editProfileInfo(profileValues) {
+    return fetch(`${this._url}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: profileValues.name,
+        about: profileValues.about,
+      }),
+    }).then((res) => this._handleServerResponse(res));
+  }
 
-const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-42",
-  headers: {
-    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-    "Content-Type": "application/json",
-  },
-});
+  addNewCard(cardValues) {
+    return fetch(`${this._url}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: cardValues.name,
+        link: cardValues.link,
+      }),
+    }).then((res) => this._handleServerResponse(res));
+  }
+
+  editProfileImage(inputValue) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: inputValue.link,
+      }),
+    }).then((res) => this._handleServerResponse(res));
+  }
+
+  deleteCard() {
+    fetch(`${this._url}/cards/${card_id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => this._handleServerResponse(res));
+  }
+
+  changeLikeCardStatus(cardID, like) {
+    return fetch(`${this._url}/cards/like/${cardID}`, {
+      method: like ? "PUT" : "DELETE",
+      headers: this._headers,
+    }).then((res) => this._handleServerResponse(res));
+  }
+}

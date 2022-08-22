@@ -1,5 +1,12 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, openVerifyModal, userID) {
+  constructor(
+    data,
+    cardSelector,
+    handleCardClick,
+    handleLikeClick,
+    openVerifyModal,
+    userID
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -8,6 +15,7 @@ export default class Card {
     this._owner_id = data.owner._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
     this._openVerifyModal = openVerifyModal;
     this._userID = userID;
   }
@@ -92,7 +100,7 @@ export default class Card {
     }
   };
 
-  _checkFavoriteButtonForActiveStatus = () => {
+  _checkIfLiked = () => {
     const isFound = this._likes.some((user) => {
       if (user._id === this._userID) {
         return true;
@@ -111,7 +119,7 @@ export default class Card {
     this._favoriteButton = this._element.querySelector("#favorite-button");
     this._trashButton = this._element.querySelector(".element__trash-button");
     this._likesCounter = this._element.querySelector(".element__likes-counter");
-    this._checkFavoriteButtonForActiveStatus();
+    this._checkIfLiked();
     this._checkIfTrashIconAllowed();
     this._setEventListeners();
 

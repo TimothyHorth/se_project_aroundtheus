@@ -11,6 +11,8 @@
   position: relative;
   width: 120px;
   height: 120px;
+  border-collapse: separate;
+  border-radius: 45%;
 }
 
 .profile__avatar {

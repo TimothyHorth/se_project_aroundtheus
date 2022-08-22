@@ -16,15 +16,17 @@ Additionally, this was one of my first projects implementing JavaScript into a w
 
 JavaScript was also used to render the 6 initial element cards using DOM manipulation. This takes the place of the previous hardcoded element cards that were originally in place. To add to the functionality of the webpage, JavaScript was also utilized to execute form validation anytime a user fires an 'input' event. Inheritance, encapuslation, and polymorphism were incorporated into this project. Classes were created for new location cards, a general popup window, an image popup, and form popups. Anytime a new card is created, the **Card** class is utilized to generate a new HTML element. The **FormValidator** class was used on both popup windows.
 
-The latest update to this project was implemenation of Webpack to bundle the project's files together. The JavaScript files, CSS files, and dependencies were linked together and made more concise, and then connected to the HTML file in order to make the code more efficient. Webpack does this through the following:
+An update was made to this project to implement use of Webpack to bundle the project's files together. The JavaScript files, CSS files, and dependencies were linked together and made more concise, and then connected to the HTML file in order to make the code more efficient. Webpack does this through the following:
 
 - The JavaScript code is rewritten so that functionality is maintained but can be used with older JavaScript versions. This negates the need to worry about browser compatibility.
 - CSS stylesheets are minified. The spaces, line breaks, and comments are all removed since the browser does not need them.
 - Vendor prefixes are automatically set so that once again browser compatability is not a concern.
 
+The latest update to the project was connecting to the project's API using fetch method calls. The initial cards are pulled from the project's API (which is why you see a various assortment of test cards from other users) instead of hardcoding them into the program. The API is also used to update the user's profile info, add new cards, and update likes on the webpage. A unique feature that can be seen on the webpage is that a trash can icon only appears on cards that the user added. This prevents other users from deleting cards that they themselves did not save to the webpage/API. I am still working on getting the verification modal to delte the specific card if the user clicks the "Yes" button.
+
 **Technologies**
 
-The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, relative width values were given to elements so that no sizes are fixed. Media queries are included to change the layout of the webpage at specific resolutions.
+The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, relative width values were given to elements so that no sizes are fixed. Media queries are included to change the layout of the webpage at specific resolutions. Java
 
 - Semantic HTML5
 - CSS Flexbox
@@ -35,6 +37,8 @@ The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, 
 - JavaScript (DOM manipulation, Classes, Inheritance, Encapsulation, Polymorphism, Form Validation)
 - Node Project Manager (NPM) / Node.js
 - Webpack
+- Promises/Asynchronous programming
+- APIs
 
 **Project**
 
@@ -42,7 +46,7 @@ The webpage was made to be responsive/adaptive using CSS flexbox. Additionally, 
 
 **Figma**
 
-- [Link to the project on Figma](https://www.figma.com/file/m79HxYeZpOXRw0Tz2eZGOV/Sprint-5%3A-Around-The-U.S.-%7C-desktop-%2B-mobile?node-id=1%3A2)
+- [Link to the project on Figma](https://www.figma.com/file/xQVeb8gprjukPVKXiLXS5T/Sprint-9%3A-Applied-JavaScript?node-id=0%3A1)
 
 **Images**
 
