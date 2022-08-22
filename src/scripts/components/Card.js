@@ -29,77 +29,64 @@ export default class Card {
     });
 
     // Add event listener to favorite button
-    this._element
-      .querySelector(".element__favorite-button")
-      .addEventListener("click", (evt) => {
-        evt.target.classList.toggle("element__favorite-button_active");
-        if (evt.target.classList.contains("element__favorite-button_active")) {
-          const updatedArr = this._likes.push(this._owner);
-          fetch(
-            `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
-            {
-              method: "PUT",
-              headers: {
-                authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                likes: updatedArr,
-              }),
+    this._favoriteButton.addEventListener("click", (evt) => {
+      evt.target.classList.toggle("element__favorite-button_active");
+      if (evt.target.classList.contains("element__favorite-button_active")) {
+        fetch(
+          `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
+          {
+            method: "PUT",
+            headers: {
+              authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              Promise.reject("Error: bad request");
             }
-          )
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              } else {
-                Promise.reject("Error: bad request");
-              }
-            })
-            .then((res) => {
-              console.log(res);
-              this._likesCounter.textContent = res.likes.length;
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          fetch(
-            `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
-            {
-              method: "DELETE",
-              headers: {
-                authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-                "Content-Type": "application/json",
-              },
+          })
+          .then((res) => {
+            this._likesCounter.textContent = res.likes.length;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        fetch(
+          `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              Promise.reject("Error: bad request");
             }
-          )
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              } else {
-                Promise.reject("Error: bad request");
-              }
-            })
-            .then((res) => {
-              console.log(res);
-              this._likesCounter.textContent = res.likes.length;
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      });
+          })
+          .then((res) => {
+            this._likesCounter.textContent = res.likes.length;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
 
     // Add event listener to trash button
     this._trashButton.addEventListener("click", this._openVerifyModal);
   }
 
-  _remove = () => {
-    this._element.remove();
-    this._element = null;
-  };
-
-  _checkTrashCan = () => {
+  _checkIfTrashIconAllowed = () => {
     if (this._owner_id !== this._userID) {
       this._trashButton.classList.add("element__trash-button_hidden");
     }
@@ -113,9 +100,7 @@ export default class Card {
     });
 
     if (isFound) {
-      this._element
-        .querySelector("#favorite-button")
-        .classList.add("element__favorite-button_active");
+      this._favoriteButton.classList.add("element__favorite-button_active");
     }
   };
 
@@ -123,14 +108,15 @@ export default class Card {
   // Create new card element
   generateCard() {
     this._element = this._getTemplate();
+    this._favoriteButton = this._element.querySelector("#favorite-button");
     this._trashButton = this._element.querySelector(".element__trash-button");
     this._likesCounter = this._element.querySelector(".element__likes-counter");
     this._checkFavoriteButtonForActiveStatus();
+    this._checkIfTrashIconAllowed();
     this._setEventListeners();
 
     this._element.querySelector(".element__title").textContent = this._name;
     this._likesCounter.textContent = this._likes.length;
-    this._checkTrashCan();
     const imageElement = this._element.querySelector(".element__image");
     imageElement.alt = `Photo of ${this._name}`;
     imageElement.src = this._link;
