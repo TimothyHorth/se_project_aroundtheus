@@ -270,18 +270,12 @@ function handleLikeClick(card, like) {
 function handleDeleteIconClick(card) {
   modalVerify.open();
   modalVerify.addSubmitAction(() => {
-    api
-      .deleteCard(card._id)
-      .then((card) => {
-        card.removeCard();
-        verifyModal.close();
-      })
-      .catch((err) => {
-        console.log(`Error: ${err.status}`);
-      });
+    // error with my api call, returns undefined
+    api.deleteCard(card._id);
+    //card.remove();
+    modalVerify.close();
   });
   modalVerify.setEventListeners();
-  console.log("reached");
 }
 
 ////////////////////////////////////////////////////////////////////////////
