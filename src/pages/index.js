@@ -9,6 +9,7 @@ import Section from "../scripts/components/Section.js";
 import Popup from "../scripts/components/Popup";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import PopupWithFormClick from "../scripts/components/PopupWithFormClick.js";
 import UserInfo from "../scripts/components/UserInfo";
 import ProfileImageLink from "../scripts/components/ProfileImageLink.js";
 import FormValidator from "../scripts/components/FormValidator.js";
@@ -31,7 +32,7 @@ import {
 
 ///////////////////////////// INITIALIZE ///////////////////////////////////
 
-const userID = "391b92fefbd8b073eecef090";
+// const userID = "391b92fefbd8b073eecef090";
 
 // initialize userID
 //const userID = user._id;
@@ -48,7 +49,7 @@ const api = new Api({
 const modalProfile = new PopupWithForm(".modal_type_profile", submitProfile);
 const modalCard = new PopupWithForm(".modal_type_card", submitCard);
 const modalImage = new PopupWithImage(".modal_type_image");
-const modalVerify = new Popup(".modal_type_verify");
+const modalVerify = new PopupWithFormClick(".modal_type_verify");
 const modalProfileImage = new PopupWithForm(
   ".modal_type_profile-image",
   submitProfileImage
@@ -60,37 +61,60 @@ const userInfo = new UserInfo({
   bio: ".profile__info-bio",
 });
 
-// Initialize user info
-const user = api
-  .getUserInfo()
-  .then((userData) => {
+api
+  .getWebpageInfo()
+  .then(([initialCards, userData]) => {
+    //set user info
     userInfo.setUserInfo(userData);
-    return userData;
+
+    const cardList = new Section(
+      {
+        items: initialCards,
+        renderer: (item) => {
+          return createCard(item, userData._id);
+        },
+      },
+      ".elements"
+    );
+
+    // Render items
+    cardList.renderItems();
   })
   .catch((err) => {
     console.log(err);
   });
 
-// Initialize cardList
+////////////////////////////// ORIGINAL CODE FROM BELOW WAS USED IN PROMISE ALL //////////////
+// // Initialize user info
+// const user = api
+//   .getUserInfo()
+//   .then((userData) => {
+//     userInfo.setUserInfo(userData);
+//     return userData;
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
-api
-  .getInitialCards()
-  .then((initialCards) => {
-    console.log(initialCards);
-    return new Section(
-      {
-        items: initialCards,
-        renderer: (item) => {
-          return createCard(item);
-        },
-      },
-      ".elements"
-    );
-  })
-  .then((cardList) => {
-    // Render items
-    cardList.renderItems();
-  });
+// // Initialize cardList
+
+// api
+//   .getInitialCards()
+//   .then((initialCards) => {
+//     return new Section(
+//       {
+//         items: initialCards,
+//         renderer: (item) => {
+//           return createCard(item);
+//         },
+//       },
+//       ".elements"
+//     );
+//   })
+//   .then((cardList) => {
+//     // Render items
+//     cardList.renderItems();
+//   });
 
 // Initialize an instance of the profileImageLink class
 const profileImageLink = new ProfileImageLink(".profile__avatar");
@@ -103,13 +127,13 @@ const formValidators = {};
 ///////////////////////////// FUNCTIONS ///////////////////////////////////
 
 // function for creating a card tile for a new location
-function createCard(item) {
+function createCard(item, userID) {
   const card = new Card(
     item,
     "#element-template",
     handleCardClick,
     handleLikeClick,
-    openVerifyModal,
+    handleDeleteIconClick,
     userID
   );
   const cardElement = card.generateCard();
@@ -126,7 +150,8 @@ function submitProfile() {
   renderSaving(true, profileSubmitButton);
   const profileValues = modalProfile.getInputValues();
   // Updating profile user info
-  api.editProfileInfo
+  api
+    .editProfileInfo(profileValues)
     .then((userData) => {
       userInfo.setUserInfo(userData);
     })
@@ -153,7 +178,7 @@ function submitCard() {
         {
           items: cardData,
           renderer: (item) => {
-            return createCard(item);
+            return createCard(item, item.owner._id);
           },
         },
         ".elements"
@@ -192,24 +217,6 @@ function submitProfileImage() {
     });
 }
 
-// callback function to open the verify modal window
-// passed as a callback so that it can be applied to new cards when they are generated
-function openVerifyModal() {
-  modalVerify.open();
-  verifySubmitButton.addEventListener("click", deleteCard);
-}
-
-// test function
-function deleteCard(card_id) {
-  api.deleteCard
-    .catch((err) => {
-      console.log(err);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
 // Function for opening modalProfileImage window to edit profile picture
 function openProfileImageModal() {
   const imageLink = profileImageLink.getProfileImageLink();
@@ -240,8 +247,41 @@ function renderSaving(isSaving, modalSubmitButton) {
 }
 
 // NEW function for handle like
-function handleLikeClick(card) {
-  api.changeLikeCardStatus(card.id);
+function handleLikeClick(card, like) {
+  const res = api
+    .changeLikeCardStatus(card._id, like)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return res;
+}
+
+// New function for delete card
+// open verify modal for deleting a card
+// delete card from API
+// remove the card from HTML
+// close verify modal window
+
+// I AM STRUGGLING TO DELETE CARDS ///
+
+function handleDeleteIconClick(card) {
+  modalVerify.open();
+  modalVerify.addSubmitAction(() => {
+    api
+      .deleteCard(card._id)
+      .then((card) => {
+        card.removeCard();
+        verifyModal.close();
+      })
+      .catch((err) => {
+        console.log(`Error: ${err.status}`);
+      });
+  });
+  modalVerify.setEventListeners();
+  console.log("reached");
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -282,7 +322,7 @@ profileEditImage.addEventListener("click", function () {
 modalProfile.setEventListeners();
 modalCard.setEventListeners();
 modalImage.setEventListeners();
-modalVerify.setEventListeners();
+// modalVerify.setEventListeners(verifySubmitButton);
 modalProfileImage.setEventListeners();
 
 // call the 'enableValidation' function so that forms can be validated

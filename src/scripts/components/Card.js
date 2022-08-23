@@ -4,9 +4,10 @@ export default class Card {
     cardSelector,
     handleCardClick,
     handleLikeClick,
-    openVerifyModal,
+    handleDeleteIconClick,
     userID
   ) {
+    this._card = data;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -16,7 +17,7 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
-    this._openVerifyModal = openVerifyModal;
+    this._handleDeleteIconClick = handleDeleteIconClick;
     this._userID = userID;
   }
 
@@ -40,59 +41,26 @@ export default class Card {
     this._favoriteButton.addEventListener("click", (evt) => {
       evt.target.classList.toggle("element__favorite-button_active");
       if (evt.target.classList.contains("element__favorite-button_active")) {
-        fetch(
-          `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
-          {
-            method: "PUT",
-            headers: {
-              authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-              "Content-Type": "application/json",
-            },
-          }
-        )
-          .then((res) => {
-            if (res.ok) {
-              return res.json();
-            } else {
-              Promise.reject("Error: bad request");
-            }
-          })
-          .then((res) => {
-            this._likesCounter.textContent = res.likes.length;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this._handleLikeClick(this._card, true).then((res) => {
+          this._likesCounter.textContent = res.likes.length;
+        });
       } else {
-        fetch(
-          `https://around.nomoreparties.co/v1/group-12/cards/likes/${this._id}`,
-          {
-            method: "DELETE",
-            headers: {
-              authorization: "655a1e50-e6e9-4121-944b-aac1807b3df3",
-              "Content-Type": "application/json",
-            },
-          }
-        )
-          .then((res) => {
-            if (res.ok) {
-              return res.json();
-            } else {
-              Promise.reject("Error: bad request");
-            }
-          })
-          .then((res) => {
-            this._likesCounter.textContent = res.likes.length;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        const res = this._handleLikeClick(this._card, false).then((res) => {
+          this._likesCounter.textContent = res.likes.length;
+        });
       }
     });
 
     // Add event listener to trash button
-    this._trashButton.addEventListener("click", this._openVerifyModal);
+    this._trashButton.addEventListener("click", () => {
+      this._handleDeleteIconClick(this._card);
+    });
   }
+
+  removeCard = () => {
+    this._element.remove();
+    this._element = null;
+  };
 
   _checkIfTrashIconAllowed = () => {
     if (this._owner_id !== this._userID) {

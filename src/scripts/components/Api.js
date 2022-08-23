@@ -57,7 +57,7 @@ export default class Api {
     }).then((res) => this._handleServerResponse(res));
   }
 
-  deleteCard() {
+  deleteCard(card_id) {
     fetch(`${this._url}/cards/${card_id}`, {
       method: "DELETE",
       headers: this._headers,
@@ -65,7 +65,7 @@ export default class Api {
   }
 
   changeLikeCardStatus(cardID, like) {
-    return fetch(`${this._url}/cards/like/${cardID}`, {
+    return fetch(`${this._url}/cards/likes/${cardID}`, {
       method: like ? "PUT" : "DELETE",
       headers: this._headers,
     }).then((res) => this._handleServerResponse(res));
