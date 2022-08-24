@@ -39,9 +39,7 @@ export default class Card {
 
     // Add event listener to favorite button
     this._favoriteButton.addEventListener("click", (evt) => {
-      this._handleLikeClick(this._card, this._checkIfLiked()).then((res) => {
-        this.updateLikes(res.likes);
-      });
+      this._handleLikeClick(this, this._checkIfLiked());
     });
 
     // Add event listener to trash button

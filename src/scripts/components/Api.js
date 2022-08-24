@@ -17,8 +17,6 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     }).then(this._handleServerResponse);
-    // so the above liine will automatically send the response to the _handleServerResponse function?
-    // similiar to sending evt to a eventlistener callback?
   }
 
   getInitialCards() {

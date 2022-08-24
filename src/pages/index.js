@@ -1,6 +1,8 @@
 ///////////////////////////// Import ///////////////////////////////////
 
-// THANKS FOR ALL THE HELP! IT IS GREATLY APPRECIATED! YOU BROUGHT UP A LOT OF GREAT TIPS AND IDEAS!
+// THANK YOU VERY MUCH FOR ALL YOUR HELP! I APPRECIATE YOU ANSWERING MY QUESTION ON API.JS
+// THIS HAS BEEN THE BEST REVIEW EXPERIENCE I'VE HAD SO FAR. YOU ARE VERY KOWLEDGABLE, AND I CAN'T
+// THANK YOU ENOUGH FOR ALL THE INSIGHT! HAVE A GREAT DAY!
 
 // import main css stylesheet
 import "./index.css";
@@ -72,7 +74,7 @@ api
   .then(([initialCards, userData]) => {
     //set user info
     userInfo.setUserInfo(userData);
-    userInfo.setAvatar(userData);
+    userInfo.setAvatar(userData.avatar);
 
     cardList = new Section(
       {
@@ -157,8 +159,7 @@ function submitProfileImage(imageLink) {
   api
     .editProfileImage(imageLink.link)
     .then((res) => {
-      console.log(res);
-      userInfo.setAvatar(res);
+      userInfo.setAvatar(res.avatar);
       modalProfileImage.close();
     })
     .catch((err) => {
@@ -188,9 +189,14 @@ const createValidator = (form) => {
 
 // function to handle clicking of the favorite/like button
 function handleLikeClick(card, like) {
-  return api.changeLikeCardStatus(card._id, like).catch((err) => {
-    console.log(err);
-  });
+  return api
+    .changeLikeCardStatus(card._id, like)
+    .then((res) => {
+      card.updateLikes(res.likes);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 // function for deleting/removing card
@@ -211,7 +217,6 @@ function handleDeleteIconClick(card) {
         modalVerify.hideLoading();
       });
   });
-  modalVerify.setEventListeners();
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -253,6 +258,7 @@ modalProfile.setEventListeners();
 modalCard.setEventListeners();
 modalImage.setEventListeners();
 modalProfileImage.setEventListeners();
+modalVerify.setEventListeners();
 
 // Initialize validators
 const addCardFormValidator = createValidator(addCardForm);

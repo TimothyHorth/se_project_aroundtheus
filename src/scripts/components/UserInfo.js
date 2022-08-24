@@ -23,7 +23,7 @@ export default class UserInfo {
     this._profileBio.textContent = profileValues.about;
   }
 
-  setAvatar(profileValues) {
-    this._profileAvatar.src = profileValues.avatar;
+  setAvatar(profileValue) {
+    this._profileAvatar.src = profileValue;
   }
 }
