@@ -1,4 +1,5 @@
 //Initialize variables for modal window
+// Sorry I had changes the file name...but it wasn't committing.
 
 // Profile Modal window
 const profileModal = document.querySelector(".modal_type_profile");
