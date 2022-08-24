@@ -22,7 +22,7 @@ An update was made to this project to implement use of Webpack to bundle the pro
 - CSS stylesheets are minified. The spaces, line breaks, and comments are all removed since the browser does not need them.
 - Vendor prefixes are automatically set so that once again browser compatability is not a concern.
 
-The latest update to the project was connecting to the project's API using fetch method calls. The initial cards are pulled from the project's API (which is why you see a various assortment of test cards from other users) instead of hardcoding them into the program. The API is also used to update the user's profile info, add new cards, and update likes on the webpage. A unique feature that can be seen on the webpage is that a trash can icon only appears on cards that the user added. This prevents other users from deleting cards that they themselves did not save to the webpage/API. I am still working on getting the verification modal to delte the specific card if the user clicks the "Yes" button.
+The latest update to the project was connecting to the project's API using fetch method calls. The initial cards are pulled from the project's API (which is why you see a various assortment of test cards from other users) instead of hardcoding them into the program. The API is also used to update the user's profile info, add new cards, and update likes on the webpage. A unique feature that can be seen on the webpage is that a trash can icon only appears on cards that the user added. This prevents other users from deleting cards that they themselves did not save to the webpage/API.
 
 **Technologies**
 
