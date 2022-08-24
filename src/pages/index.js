@@ -1,9 +1,5 @@
 ///////////////////////////// Import ///////////////////////////////////
 
-// THANK YOU VERY MUCH FOR ALL YOUR HELP! I APPRECIATE YOU ANSWERING MY QUESTION ON API.JS
-// THIS HAS BEEN THE BEST REVIEW EXPERIENCE I'VE HAD SO FAR. YOU ARE VERY KOWLEDGABLE, AND I CAN'T
-// THANK YOU ENOUGH FOR ALL THE INSIGHT! HAVE A GREAT DAY!
-
 // import main css stylesheet
 import "./index.css";
 
