@@ -39,28 +39,25 @@ export default class Card {
 
     // Add event listener to favorite button
     this._favoriteButton.addEventListener("click", (evt) => {
-      evt.target.classList.toggle("element__favorite-button_active");
-      if (evt.target.classList.contains("element__favorite-button_active")) {
-        this._handleLikeClick(this._card, true).then((res) => {
-          this._likesCounter.textContent = res.likes.length;
-        });
-      } else {
-        const res = this._handleLikeClick(this._card, false).then((res) => {
-          this._likesCounter.textContent = res.likes.length;
-        });
-      }
+      this._handleLikeClick(this._card, this._checkIfLiked()).then((res) => {
+        this.updateLikes(res.likes);
+      });
     });
 
     // Add event listener to trash button
     this._trashButton.addEventListener("click", () => {
-      this._handleDeleteIconClick(this._card);
+      this._handleDeleteIconClick(this);
     });
   }
 
-  removeCard = () => {
+  removeCard() {
     this._element.remove();
     this._element = null;
-  };
+  }
+
+  getID() {
+    return this._id;
+  }
 
   _checkIfTrashIconAllowed = () => {
     if (this._owner_id !== this._userID) {
@@ -68,31 +65,40 @@ export default class Card {
     }
   };
 
-  _checkIfLiked = () => {
-    const isFound = this._likes.some((user) => {
-      if (user._id === this._userID) {
-        return true;
-      }
-    });
+  /////////////////////////////////////////////////////////////////////////////
+  updateLikes(likes) {
+    this._likes = likes;
+    this._renderLikes();
+  }
 
-    if (isFound) {
+  _checkIfLiked() {
+    return this._likes.some((user) => user._id === this._userID);
+  }
+
+  _renderLikes() {
+    // set likes cunter content using this._likes.length
+    if (this._checkIfLiked()) {
+      // add active class to like button
       this._favoriteButton.classList.add("element__favorite-button_active");
+    } else {
+      // remove active class from like button
+      this._favoriteButton.classList.remove("element__favorite-button_active");
     }
-  };
+    this._likesCounter.textContent = this._likes.length;
+  }
 
-  // Create a function for editing the element template to return a unique element card
   // Create new card element
   generateCard() {
     this._element = this._getTemplate();
     this._favoriteButton = this._element.querySelector("#favorite-button");
     this._trashButton = this._element.querySelector(".element__trash-button");
     this._likesCounter = this._element.querySelector(".element__likes-counter");
-    this._checkIfLiked();
+    this._renderLikes();
     this._checkIfTrashIconAllowed();
     this._setEventListeners();
 
-    this._element.querySelector(".element__title").textContent = this._name;
-    this._likesCounter.textContent = this._likes.length;
+    this._elementTitle = this._element.querySelector(".element__title");
+    this._elementTitle.textContent = this._name;
     const imageElement = this._element.querySelector(".element__image");
     imageElement.alt = `Photo of ${this._name}`;
     imageElement.src = this._link;

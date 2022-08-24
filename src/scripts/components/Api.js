@@ -16,7 +16,9 @@ export default class Api {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: this._headers,
-    }).then((res) => this._handleServerResponse(res));
+    }).then(this._handleServerResponse);
+    // so the above liine will automatically send the response to the _handleServerResponse function?
+    // similiar to sending evt to a eventlistener callback?
   }
 
   getInitialCards() {
@@ -47,18 +49,18 @@ export default class Api {
     }).then((res) => this._handleServerResponse(res));
   }
 
-  editProfileImage(inputValue) {
+  editProfileImage(avatarLink) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: inputValue.link,
+        avatar: avatarLink,
       }),
     }).then((res) => this._handleServerResponse(res));
   }
 
-  deleteCard(card_id) {
-    fetch(`${this._url}/cards/${card_id}`, {
+  deleteCard(cardID) {
+    return fetch(`${this._url}/cards/${cardID}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => this._handleServerResponse(res));
@@ -66,7 +68,7 @@ export default class Api {
 
   changeLikeCardStatus(cardID, like) {
     return fetch(`${this._url}/cards/likes/${cardID}`, {
-      method: like ? "PUT" : "DELETE",
+      method: !like ? "PUT" : "DELETE",
       headers: this._headers,
     }).then((res) => this._handleServerResponse(res));
   }

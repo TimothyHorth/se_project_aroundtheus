@@ -6,36 +6,28 @@ import "./index.css";
 // import classes from respective JS files
 import Card from "../scripts/components/Card.js";
 import Section from "../scripts/components/Section.js";
-import Popup from "../scripts/components/Popup";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithFormClick from "../scripts/components/PopupWithFormClick.js";
 import UserInfo from "../scripts/components/UserInfo";
-import ProfileImageLink from "../scripts/components/ProfileImageLink.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import Api from "../scripts/components/Api.js";
 
-// import constants from utils/Constants.js
+// import constants from utils/constants.js
 import {
   profileEditButton,
   profileImageOverlay,
   profileEditImage,
-  profileSubmitButton,
-  profileImageSubmitButton,
-  cardSubmitButton,
-  verifySubmitButton,
+  addCardForm,
+  editProfileForm,
+  avatarForm,
   addCardButton,
   validationConfig,
-} from "../scripts/utils/Constants.js";
+} from "../scripts/utils/constants.js";
 
 ////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////// INITIALIZE ///////////////////////////////////
-
-// const userID = "391b92fefbd8b073eecef090";
-
-// initialize userID
-//const userID = user._id;
 
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
@@ -46,28 +38,41 @@ const api = new Api({
 });
 
 // Initialize instances of the Popup classes for each modal window
-const modalProfile = new PopupWithForm(".modal_type_profile", submitProfile);
-const modalCard = new PopupWithForm(".modal_type_card", submitCard);
+const modalProfile = new PopupWithForm(
+  ".modal_type_profile",
+  submitProfile,
+  "Saving..."
+);
+const modalCard = new PopupWithForm(
+  ".modal_type_card",
+  submitCard,
+  "Creating..."
+);
 const modalImage = new PopupWithImage(".modal_type_image");
-const modalVerify = new PopupWithFormClick(".modal_type_verify");
+const modalVerify = new PopupWithFormClick(".modal_type_verify", "Removing...");
 const modalProfileImage = new PopupWithForm(
   ".modal_type_profile-image",
-  submitProfileImage
+  submitProfileImage,
+  "Saving..."
 );
 
 // Initialize an instance of the UserInfo class
 const userInfo = new UserInfo({
   name: ".profile__info-name-text",
-  bio: ".profile__info-bio",
+  about: ".profile__info-bio",
+  avatar: ".profile__avatar",
 });
+
+let cardList;
 
 api
   .getWebpageInfo()
   .then(([initialCards, userData]) => {
     //set user info
     userInfo.setUserInfo(userData);
+    userInfo.setAvatar(userData);
 
-    const cardList = new Section(
+    cardList = new Section(
       {
         items: initialCards,
         renderer: (item) => {
@@ -83,44 +88,6 @@ api
   .catch((err) => {
     console.log(err);
   });
-
-////////////////////////////// ORIGINAL CODE FROM BELOW WAS USED IN PROMISE ALL //////////////
-// // Initialize user info
-// const user = api
-//   .getUserInfo()
-//   .then((userData) => {
-//     userInfo.setUserInfo(userData);
-//     return userData;
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-// // Initialize cardList
-
-// api
-//   .getInitialCards()
-//   .then((initialCards) => {
-//     return new Section(
-//       {
-//         items: initialCards,
-//         renderer: (item) => {
-//           return createCard(item);
-//         },
-//       },
-//       ".elements"
-//     );
-//   })
-//   .then((cardList) => {
-//     // Render items
-//     cardList.renderItems();
-//   });
-
-// Initialize an instance of the profileImageLink class
-const profileImageLink = new ProfileImageLink(".profile__avatar");
-
-// Initialize object for storing forms
-const formValidators = {};
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -146,134 +113,101 @@ const handleCardClick = (name, link) => {
 };
 
 // callback function for modalProfile when form is submitted to submit user info
-function submitProfile() {
-  renderSaving(true, profileSubmitButton);
-  const profileValues = modalProfile.getInputValues();
+function submitProfile(profileValues) {
+  modalProfile.showLoading();
   // Updating profile user info
   api
     .editProfileInfo(profileValues)
     .then((userData) => {
       userInfo.setUserInfo(userData);
-    })
-    .then(() => {
       modalProfile.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      renderSaving(false, profileSubmitButton);
+      modalProfile.hideLoading();
     });
 }
 
 // callback function for modalCard when form is submitted
-function submitCard() {
-  renderSaving(true, cardSubmitButton);
-  const cardValues = modalCard.getInputValues();
+function submitCard(cardValues) {
+  modalCard.showLoading();
   // Adding a new card
   api
     .addNewCard(cardValues)
     .then((cardData) => {
-      const cardList = new Section(
-        {
-          items: cardData,
-          renderer: (item) => {
-            return createCard(item, item.owner._id);
-          },
-        },
-        ".elements"
-      );
       cardList.addItem(cardData);
-    })
-    .then(() => {
       modalCard.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      renderSaving(false, profileSubmitButton);
+      modalCard.hideLoading();
     });
 }
 
-// callback function for submitting profile image through modalProfileImage
 // callback function for modalProfileImage when form is submitted to edit profile image
-function submitProfileImage() {
-  renderSaving(true, profileImageSubmitButton);
-  const inputValue = modalProfileImage.getInputValues();
+function submitProfileImage(imageLink) {
+  modalProfileImage.showLoading();
   // Updating profile user info
-  api.editProfileImage
-    .then((imageLink) => {
-      profileImageLink.setProfileImage(imageLink);
-    })
-    .then(() => {
+  api
+    .editProfileImage(imageLink.link)
+    .then((res) => {
+      console.log(res);
+      userInfo.setAvatar(res);
       modalProfileImage.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      renderSaving(false, profileImageSubmitButton);
+      modalProfileImage.hideLoading();
     });
 }
 
 // Function for opening modalProfileImage window to edit profile picture
 function openProfileImageModal() {
-  const imageLink = profileImageLink.getProfileImageLink();
+  const imageLink = userInfo.getAvatar();
   modalProfileImage.setInputValues(imageLink);
-  formValidators["edit profile image"].resetValidation();
-  formValidators["edit profile image"].toggleButtonState();
+  avatarFormValidator.resetValidation();
+  avatarFormValidator.toggleButtonState();
   modalProfileImage.open();
 }
 
-// function for enabling validation
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    const formName = formElement.getAttribute("name");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
+// function for creating validators
+const createValidator = (form) => {
+  const validator = new FormValidator(validationConfig, form);
+  validator.enableValidation();
+
+  return validator;
 };
 
-// NEW FUNCTION FOR LOADING
-function renderSaving(isSaving, modalSubmitButton) {
-  if (isSaving) {
-    modalSubmitButton.textContent = "Saving...";
-  } else {
-    modalSubmitButton.textContent = "Save";
-  }
-}
-
-// NEW function for handle like
+// function to handle clicking of the favorite/like button
 function handleLikeClick(card, like) {
-  const res = api
-    .changeLikeCardStatus(card._id, like)
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return res;
+  return api.changeLikeCardStatus(card._id, like).catch((err) => {
+    console.log(err);
+  });
 }
 
-// New function for delete card
-// open verify modal for deleting a card
-// delete card from API
-// remove the card from HTML
-// close verify modal window
-
-// I AM STRUGGLING TO DELETE CARDS ///
-
+// function for deleting/removing card
 function handleDeleteIconClick(card) {
   modalVerify.open();
   modalVerify.addSubmitAction(() => {
-    // error with my api call, returns undefined
-    api.deleteCard(card._id);
-    //card.remove();
-    modalVerify.close();
+    modalVerify.showLoading();
+    api
+      .deleteCard(card.getID())
+      .then(() => {
+        card.removeCard();
+        modalVerify.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        modalVerify.hideLoading();
+      });
   });
   modalVerify.setEventListeners();
 }
@@ -286,15 +220,15 @@ function handleDeleteIconClick(card) {
 profileEditButton.addEventListener("click", function () {
   const userValues = userInfo.getUserInfo();
   modalProfile.setInputValues(userValues);
-  formValidators["edit profile"].resetValidation();
-  formValidators["edit profile"].toggleButtonState();
+  editProfileFormValidator.resetValidation();
+  editProfileFormValidator.toggleButtonState();
   modalProfile.open();
 });
 
 // set eventlistener for new modalCard window when the plus (add new card) button is clicked
 addCardButton.addEventListener("click", function () {
-  formValidators["edit card"].resetValidation();
-  formValidators["edit card"].toggleButtonState();
+  addCardFormValidator.resetValidation();
+  addCardFormValidator.toggleButtonState();
   modalCard.open();
 });
 
@@ -316,8 +250,9 @@ profileEditImage.addEventListener("click", function () {
 modalProfile.setEventListeners();
 modalCard.setEventListeners();
 modalImage.setEventListeners();
-// modalVerify.setEventListeners(verifySubmitButton);
 modalProfileImage.setEventListeners();
 
-// call the 'enableValidation' function so that forms can be validated
-enableValidation(validationConfig);
+// Initialize validators
+const addCardFormValidator = createValidator(addCardForm);
+const editProfileFormValidator = createValidator(editProfileForm);
+const avatarFormValidator = createValidator(avatarForm);

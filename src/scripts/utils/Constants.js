@@ -10,20 +10,18 @@ const profileName = document.querySelector(".profile__info-name-text");
 const profileAbout = document.querySelector(".profile__info-bio");
 const formName = document.querySelector("#name");
 const formDescription = document.querySelector("#about-me");
-const profileForm = document.querySelector(".modal__form_type_profile");
-const profileSubmitButton = profileForm.querySelector("#save-profile");
+const editProfileForm = document.querySelector(".modal__form_type_profile");
 
 // Card Modal window
 const newCardModal = document.querySelector(".modal_type_card");
 const newCardModalCloseButton = document.querySelector(
   ".modal__close-button_type_card"
 );
-const newCardModalForm = document.querySelector(".modal__form_type_card");
+const addCardForm = document.querySelector(".modal__form_type_card");
 const cardTitle = document.querySelector("#title");
 const cardImageLink = document.querySelector("#image-link");
 const addCardButton = document.querySelector(".profile__add-button");
 const cardsList = document.querySelector(".elements");
-const cardSubmitButton = document.querySelector("#create");
 
 // Image Modal window
 const imageModal = document.querySelector(".modal_type_image");
@@ -34,41 +32,9 @@ const imageModalCloseButton = imageModal.querySelector("#image-close");
 // Profile image constants
 const profileAvatar = document.querySelector(".profile__avatar");
 const profileEditPencil = document.querySelector(".profile__edit-image");
-
-// NEW
+const avatarForm = document.querySelector(".modal__form_type_profile-image");
 const profileImageOverlay = document.querySelector(".profile__overlay");
 const profileEditImage = document.querySelector(".profile__edit-image");
-const profileImageSubmitButton = document.querySelector("#save-profile-image");
-const verifySubmitButton = document.querySelector("#verify");
-
-// Create an array containing all six initialized objects
-
-// const initialCards = [
-//   {
-//     name: "Yosemite Valley",
-//     link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-//   },
-//   {
-//     name: "Lake Louise",
-//     link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-//   },
-//   {
-//     name: "Bald Mountains",
-//     link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
-//   },
-//   {
-//     name: "Latemar",
-//     link: "https://code.s3.yandex.net/web-code/latemar.jpg",
-//   },
-//   {
-//     name: "Vanoise National Park",
-//     link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
-//   },
-//   {
-//     name: "Lago di Braies",
-//     link: "https://code.s3.yandex.net/web-code/lago.jpg",
-//   },
-// ];
 
 // Initializing the configuration object for validation
 
@@ -95,14 +61,11 @@ export {
   profileEditPencil,
   formName,
   formDescription,
-  profileForm,
-  profileSubmitButton,
-  profileImageSubmitButton,
-  cardSubmitButton,
-  verifySubmitButton,
+  editProfileForm,
   newCardModal,
   newCardModalCloseButton,
-  newCardModalForm,
+  addCardForm,
+  avatarForm,
   cardTitle,
   cardImageLink,
   addCardButton,
