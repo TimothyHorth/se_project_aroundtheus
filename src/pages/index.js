@@ -1,5 +1,7 @@
 ///////////////////////////// Import ///////////////////////////////////
 
+// THANKS FOR ALL THE HELP! IT IS GREATLY APPRECIATED! YOU BROUGHT UP A LOT OF GREAT TIPS AND IDEAS!
+
 // import main css stylesheet
 import "./index.css";
 
